@@ -18,5 +18,35 @@
     "react"
   ],
   "rules": {
+    "no-plusplus": 0,
+    "func-names": [
+      "error",
+      "as-needed"
+    ],
+    "curly": 2,
+    "brace-style": [
+      2,
+      "1tbs"
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "always"
+    ],
+    "max-len": [
+      2,
+      180
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": "always",
+        "ObjectPattern": "never"
+      }
+    ],
+    "eol-last": 1
   }
 }
