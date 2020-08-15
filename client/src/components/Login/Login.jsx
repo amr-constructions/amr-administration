@@ -1,12 +1,18 @@
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Form, Input, Row, Typography } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../assets/img/amr_logo_black.png';
 import './Login.css';
 
 const { Title } = Typography;
 
 function Login() {
+  const [ loading, setLoading ] = useState(false);
+
+  const onFinish = () => {
+    setLoading(true);
+  };
+
   return (
     <Row
       className="amr-login-container"
@@ -28,6 +34,7 @@ function Login() {
 
           <Form
             name="amr-login-form"
+            onFinish={onFinish}
           >
             <Form.Item
               name="username"
@@ -42,6 +49,7 @@ function Login() {
                 size="large"
                 placeholder="Username"
                 prefix={<UserOutlined />}
+                disabled={loading}
               />
             </Form.Item>
 
@@ -59,6 +67,7 @@ function Login() {
                 placeholder="Password"
                 prefix={<LockOutlined />}
                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                disabled={loading}
               />
             </Form.Item>
 
@@ -68,6 +77,7 @@ function Login() {
                 size="large"
                 icon={<LoginOutlined />}
                 htmlType="submit"
+                loading={loading}
               >
                 Login!
               </Button>
