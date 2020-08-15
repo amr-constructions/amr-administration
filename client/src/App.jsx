@@ -11,6 +11,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route path="*" component={() => '404 NOT FOUND'} />
         </Switch>
       </div>
     </Router>
