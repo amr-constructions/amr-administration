@@ -8,11 +8,7 @@ import './Login.css';
 
 const { Title } = Typography;
 
-const handleToastClose = () => {
-  /* Redirect To Dashboard */
-};
-
-function Login() {
+function Login(props) {
   const [ states, setStates ] = useState({
     loading: false,
     isToastShown: false,
@@ -43,7 +39,10 @@ function Login() {
       ...prevState,
       isToastShown: true,
     }));
-    message.success('Authentication Successful', 1, handleToastClose);
+    message.success('Authentication Successful');
+
+    /* Goto dashboard */
+    props.history.push('/dashboard');
   };
 
   return (
