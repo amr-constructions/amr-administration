@@ -1,6 +1,8 @@
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Form, Input, Row, Typography } from 'antd';
 import React, { useState } from 'react';
+import Authenticate from '../../services/Auth';
+import Constants from '../../constants/Constants';
 import logo from '../../assets/img/amr_logo_black.png';
 import './Login.css';
 
@@ -9,8 +11,13 @@ const { Title } = Typography;
 function Login() {
   const [ loading, setLoading ] = useState(false);
 
-  const onFinish = () => {
+  const submitLoginForm = async (values) => {
     setLoading(true);
+
+    const response = await Authenticate(Constants.LOGIN, values);
+    if (response.code !== Constants.SUCCESS) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,7 +41,7 @@ function Login() {
 
           <Form
             name="amr-login-form"
-            onFinish={onFinish}
+            onFinish={submitLoginForm}
           >
             <Form.Item
               name="username"
