@@ -1,0 +1,29 @@
+.amr-login-container {
+  min-height: 100vh
+}
+
+.amr-login-container .amr-login-card {
+  width: 40rem;
+}
+
+.amr-login-container .amr-login-card .amr-logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -3rem;
+}
+
+.amr-login-container .amr-login-card .amr-logo-container .logo {
+  width: 20rem;
+  height: 20rem;
+}
+
+.amr-login-container .amr-login-card .amr-login-form-title {
+  display: flex;
+  justify-content: center;
+  margin-top: -3.5rem;
+  margin-bottom: 2rem;
+}
+
+.amr-login-submit {
+  float: right;
+}
