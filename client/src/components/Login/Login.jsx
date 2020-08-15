@@ -13,24 +13,36 @@ const handleToastClose = () => {
 };
 
 function Login() {
-  const [ loading, setLoading ] = useState(false);
-  const [ isToastShown, setToastShown ] = useState(false);
+  const [ states, setStates ] = useState({
+    loading: false,
+    isToastShown: false,
+  });
 
   const submitLoginForm = async (values) => {
-    if (isToastShown) {
+    if (states.isToastShown) {
       message.destroy();
     }
-    setLoading(true);
+    setStates((prevState) => ({
+      ...prevState,
+      loading: true,
+    }));
 
     const response = await Authenticate(Constants.LOGIN, values);
     if (response.code !== Constants.SUCCESS) {
-      setLoading(false);
-      setToastShown(true);
+      setStates((prevState) => ({
+        ...prevState,
+        loading: false,
+        isToastShown: true,
+      }));
+
       message.error(`${response.reason} [${response.debugCode}]`);
       return;
     }
 
-    setToastShown(true);
+    setStates((prevState) => ({
+      ...prevState,
+      isToastShown: true,
+    }));
     message.success('Authentication Successful', 1, handleToastClose);
   };
 
@@ -70,7 +82,7 @@ function Login() {
                 size="large"
                 placeholder="Username"
                 prefix={<UserOutlined />}
-                disabled={loading}
+                disabled={states.loading}
               />
             </Form.Item>
 
@@ -88,7 +100,7 @@ function Login() {
                 placeholder="Password"
                 prefix={<LockOutlined />}
                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                disabled={loading}
+                disabled={states.loading}
               />
             </Form.Item>
 
@@ -98,7 +110,7 @@ function Login() {
                 size="large"
                 icon={<LoginOutlined />}
                 htmlType="submit"
-                loading={loading}
+                loading={states.loading}
               >
                 Login!
               </Button>
