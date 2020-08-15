@@ -1,23 +1,37 @@
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Form, Input, Row, Typography } from 'antd';
+import { Button, Card, Col, Form, Input, message, Row, Typography } from 'antd';
 import React, { useState } from 'react';
-import Authenticate from '../../services/Auth';
-import Constants from '../../constants/Constants';
 import logo from '../../assets/img/amr_logo_black.png';
+import Constants from '../../constants/Constants';
+import Authenticate from '../../services/Auth';
 import './Login.css';
 
 const { Title } = Typography;
 
+const handleToastClose = () => {
+  /* Redirect To Dashboard */
+};
+
 function Login() {
   const [ loading, setLoading ] = useState(false);
+  const [ isToastShown, setToastShown ] = useState(false);
 
   const submitLoginForm = async (values) => {
+    if (isToastShown) {
+      message.destroy();
+    }
     setLoading(true);
 
     const response = await Authenticate(Constants.LOGIN, values);
     if (response.code !== Constants.SUCCESS) {
       setLoading(false);
+      setToastShown(true);
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
     }
+
+    setToastShown(true);
+    message.success('Authentication Successful', 1, handleToastClose);
   };
 
   return (
