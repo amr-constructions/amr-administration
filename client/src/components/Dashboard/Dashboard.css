@@ -13,12 +13,22 @@
   background: #fff;
 }
 
+.dashboard-layout {
+  margin-left: 16.5rem;
+  transition: all 0.2s;
+}
+
+.dashboard-layout.side-nav-collapsed {
+  margin-left: 6rem;
+  transition: all 0.2s;
+}
+
 .dashboard-layout .dashboard-layout-background {
   background: #fff;
 }
 
 .dashboard-main-content {
-  margin: 1.5rem 1rem;
+  margin: 1.5rem 0rem;
   padding: 1.5rem;
 }
 

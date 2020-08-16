@@ -31,7 +31,7 @@ class Dashboard extends React.Component {
       <SideNavToggleProvider value={collapsed}>
         <Layout className="dashboard-layout-container">
           <SideNav />
-          <Layout className="dashboard-layout">
+          <Layout className={`dashboard-layout ${collapsed ? 'side-nav-collapsed' : ''}`}>
             <Header className="dashboard-header dashboard-background">
               {
               React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
