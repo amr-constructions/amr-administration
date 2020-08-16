@@ -1,9 +1,10 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
 import React from 'react';
+import SideNav from '../SideNav/SideNav';
 import './Dashboard.css';
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -24,22 +25,10 @@ class Dashboard extends React.Component {
 
   render() {
     const { collapsed } = this.state;
+
     return (
       <Layout className="dashboard-layout-container">
-        <Sider trigger={null} collapsed={collapsed} collapsible>
-          <div className="dashboard-logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={[ '1' ]}>
-            <Menu.Item key="1" icon={<UserOutlined />}>
-              nav 1
-            </Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-              nav 2
-            </Menu.Item>
-            <Menu.Item key="3" icon={<UploadOutlined />}>
-              nav 3
-            </Menu.Item>
-          </Menu>
-        </Sider>
+        <SideNav />
         <Layout className="dashboard-layout">
           <Header className="dashboard-header dashboard-background">
             {
