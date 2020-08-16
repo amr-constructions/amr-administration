@@ -1,5 +1,6 @@
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Form, Input, message, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import logo from '../../assets/img/amr_logo_black.png';
 import Constants from '../../constants/Constants';
@@ -8,7 +9,7 @@ import './Login.css';
 
 const { Title } = Typography;
 
-function Login(props) {
+function Login({ history }) {
   const [ states, setStates ] = useState({
     loading: false,
     isToastShown: false,
@@ -42,7 +43,7 @@ function Login(props) {
     message.success('Authentication Successful');
 
     /* Goto dashboard */
-    props.history.push('/dashboard');
+    history.push('/dashboard');
   };
 
   return (
@@ -121,5 +122,11 @@ function Login(props) {
     </Row>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Login;
