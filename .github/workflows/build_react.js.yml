@@ -16,13 +16,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install
-      run: npm ci
-    - name: Test
-      run: npm test
+    - name: Install Client
+      run: cd client && npm ci
+    - name: Test Client
+      run: cd client && npm test
       env:
         SKIP_PREFLIGHT_CHECK: true
-    - name: Build
-      run: npm run build
+    - name: Build Client
+      run: cd client && npm run build
       env:
         SKIP_PREFLIGHT_CHECK: true
