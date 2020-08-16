@@ -5,6 +5,7 @@ import './SideNav.css';
 import MenuItems from './SideNavItems';
 
 const { Sider } = Layout;
+const { SubMenu } = Menu;
 
 const SideNav = () => (
   <SideNavToggleConsumer>
@@ -22,10 +23,32 @@ const SideNav = () => (
           {
             MenuItems.map((menuItem) => {
               const menuIcon = React.createElement(menuItem.icon);
+
+              let menuItemToRender = '';
+              if (!menuItem.parent || !menuItem.children || !menuItem.children.length) {
+                menuItemToRender = (
+                  <Menu.Item key={menuItem.id} icon={menuIcon}>
+                    {menuItem.title}
+                  </Menu.Item>
+                );
+              } else {
+                menuItemToRender = (
+                  <SubMenu key={menuItem.id} icon={menuIcon} title={menuItem.title}>
+                    {
+                      menuItem.children.map((SubMenuItem) => {
+                        const subMenuIcon = React.createElement(SubMenuItem.icon);
+                        return (
+                          <Menu.Item key={SubMenuItem.id} icon={subMenuIcon}>
+                            {SubMenuItem.title}
+                          </Menu.Item>
+                        );
+                      })
+                  }
+                  </SubMenu>
+                );
+              }
               return (
-                <Menu.Item key={menuItem.id} icon={menuIcon}>
-                  {menuItem.title}
-                </Menu.Item>
+                menuItemToRender
               );
             })
           }
