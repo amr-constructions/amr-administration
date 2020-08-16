@@ -1,7 +1,6 @@
-.dashboard-sidenav-logo {
-  height: 2rem;
+.dashboard-sidenav-logo-container {
+  height: 5rem;
   margin: 1rem;
-  background: rgba(255, 255, 255, 0.2);
 }
 
 .dashboard-sidenav {
@@ -9,4 +8,9 @@
   height: 100vh;
   position: fixed;
   left: 0;
+}
+
+.dashboard-sidenav-logo {
+  width: 10rem;
+  height: 5rem;
 }
