@@ -1,0 +1,37 @@
+.dashboard-side-nav-trigger {
+  font-size: 1.2rem;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.dashboard-side-nav-trigger:hover {
+  color: #1890ff;
+}
+
+.dashboard-layout-container .dashboard-logo {
+  height: 2rem;
+  margin: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dashboard-background {
+  background: #fff;
+}
+
+.dashboard-layout .dashboard-layout-background {
+  background: #fff;
+}
+
+.dashboard-main-content {
+  margin: 1.5rem 1rem;
+  padding: 1.5rem;
+}
+
+.dashboard-layout-container {
+  height: 100vh;
+}
+
+.dashboard-header {
+  padding: 0;
+}
