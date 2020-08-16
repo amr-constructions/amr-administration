@@ -1,8 +1,8 @@
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import React from 'react';
 import { SideNavToggleConsumer } from '../../contexts/SideNavToggleContext';
 import './SideNav.css';
+import MenuItems from './SideNavItems';
 
 const { Sider } = Layout;
 
@@ -10,18 +10,25 @@ const SideNav = () => (
   <SideNavToggleConsumer>
     {
     (collapsed) => (
-      <Sider trigger={null} collapsed={collapsed} collapsible>
+      <Sider
+        trigger={null}
+        collapsed={collapsed}
+        collapsible
+        width={250}
+        className="dashboard-sidenav"
+      >
         <div className="dashboard-sidenav-logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={[ '1' ]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            nav 1
-          </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            nav 2
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            nav 3
-          </Menu.Item>
+        <Menu theme="dark" mode="inline">
+          {
+            MenuItems.map((menuItem) => {
+              const menuIcon = React.createElement(menuItem.icon);
+              return (
+                <Menu.Item key={menuItem.id} icon={menuIcon}>
+                  {menuItem.title}
+                </Menu.Item>
+              );
+            })
+          }
         </Menu>
       </Sider>
     )
