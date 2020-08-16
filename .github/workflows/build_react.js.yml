@@ -19,7 +19,7 @@ jobs:
     - name: Install Client
       run: cd client && npm ci
     - name: Test Client
-      run: cd client && npm test
+      run: cd client && npm test -- --passWithNoTests
       env:
         SKIP_PREFLIGHT_CHECK: true
     - name: Build Client
