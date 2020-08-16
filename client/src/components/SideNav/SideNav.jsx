@@ -1,9 +1,10 @@
 import { Layout, Menu } from 'antd';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../../assets/img/amr_logo_white.png';
 import { SideNavToggleConsumer } from '../../contexts/SideNavToggleContext';
 import './SideNav.css';
 import MenuItems from './SideNavItems';
-import logo from '../../assets/img/amr_logo_white.png';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -19,9 +20,12 @@ const SideNav = () => (
         width={250}
         className="dashboard-sidenav"
       >
-        <div className="dashboard-sidenav-logo-container">
-          <img src={logo} className="dashboard-sidenav-logo" alt="AMR Constructions Logo" title="AMR Constructions" />
-        </div>
+        <Link to="/dashboard">
+          <div className="dashboard-sidenav-logo-container">
+            <img src={logo} className="dashboard-sidenav-logo" alt="AMR Constructions Logo" title="AMR Constructions" />
+          </div>
+        </Link>
+
         <Menu theme="dark" mode="inline">
           {
             MenuItems.map((menuItem) => {
