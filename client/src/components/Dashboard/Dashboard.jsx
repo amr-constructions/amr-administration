@@ -2,6 +2,8 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { Route } from 'react-router-dom';
+import UnderConstruction from '../UnderConstruction/UnderConstruction';
 import SideNav from '../SideNav/SideNav';
 import './Dashboard.css';
 
@@ -42,7 +44,8 @@ const Dashboard = ({ history }) => {
           Admin Dashboard
         </Header>
         <Content className="dashboard-main-content dashboard-background">
-          Content
+          <Route exact strict path="/dashboard" component={UnderConstruction} />
+          <Route exact strict path="/dashboard/testing" component={UnderConstruction} />
         </Content>
         <Footer className="dashboard-footer">
           {`©${currentYear} Created by Azanay Tech`}
