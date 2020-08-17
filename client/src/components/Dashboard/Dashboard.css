@@ -1,0 +1,45 @@
+.dashboard-side-nav-trigger {
+  font-size: 1.2rem;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.dashboard-side-nav-trigger:hover {
+  color: #1890ff;
+}
+
+.dashboard-background {
+  background: #fff;
+}
+
+.dashboard-layout {
+  margin-left: 16.5rem;
+  transition: all 0.2s;
+}
+
+.dashboard-layout.side-nav-collapsed {
+  margin-left: 6rem;
+  transition: all 0.2s;
+}
+
+.dashboard-layout .dashboard-layout-background {
+  background: #fff;
+}
+
+.dashboard-main-content {
+  margin: 1.5rem 0rem;
+  padding: 1.5rem;
+}
+
+.dashboard-layout-container {
+  height: 100vh;
+}
+
+.dashboard-header {
+  padding: 0;
+}
+
+.dashboard-footer {
+  text-align: center
+}
