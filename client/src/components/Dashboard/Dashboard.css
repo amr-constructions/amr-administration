@@ -39,3 +39,7 @@
 .dashboard-header {
   padding: 0;
 }
+
+.dashboard-footer {
+  text-align: center
+}

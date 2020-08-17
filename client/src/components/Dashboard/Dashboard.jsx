@@ -5,7 +5,7 @@ import React from 'react';
 import SideNav from '../SideNav/SideNav';
 import './Dashboard.css';
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class Dashboard extends React.Component {
       collapsed: false,
     };
 
+    this.currentYear = new Date().getFullYear();
     this.toggle = this.toggle.bind(this);
     this.gotoLocation = this.gotoLocation.bind(this);
   }
@@ -51,6 +52,9 @@ class Dashboard extends React.Component {
           <Content className="dashboard-main-content dashboard-background">
             Content
           </Content>
+          <Footer className="dashboard-footer">
+            {`©${this.currentYear} Created by Azanay Tech`}
+          </Footer>
         </Layout>
       </Layout>
     );
