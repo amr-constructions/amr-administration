@@ -9,22 +9,27 @@ import MenuItems from './SideNavItems';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-const SideNav = ({ collapsed }) => (
-  <Sider
-    trigger={null}
-    collapsed={collapsed}
-    collapsible
-    width={250}
-    className="dashboard-sidenav"
-  >
-    <Link to="/dashboard">
-      <div className="dashboard-sidenav-logo-container">
-        <img src={logo} className="dashboard-sidenav-logo" alt="AMR Constructions Logo" title="AMR Constructions" />
-      </div>
-    </Link>
+const SideNav = ({ collapsed, navigate }) => {
+  const handleClick = (e) => {
+    navigate('/dashboard');
+  };
 
-    <Menu theme="dark" mode="inline">
-      {
+  return (
+    <Sider
+      trigger={null}
+      collapsed={collapsed}
+      collapsible
+      width={250}
+      className="dashboard-sidenav"
+    >
+      <Link to="/dashboard">
+        <div className="dashboard-sidenav-logo-container">
+          <img src={logo} className="dashboard-sidenav-logo" alt="AMR Constructions Logo" title="AMR Constructions" />
+        </div>
+      </Link>
+
+      <Menu theme="dark" mode="inline" onClick={handleClick}>
+        {
         MenuItems.map((menuItem) => {
           const menuIcon = React.createElement(menuItem.icon);
 
@@ -56,12 +61,14 @@ const SideNav = ({ collapsed }) => (
           );
         })
       }
-    </Menu>
-  </Sider>
-);
+      </Menu>
+    </Sider>
+  );
+};
 
 SideNav.propTypes = {
   collapsed: PropTypes.bool.isRequired,
+  navigate: PropTypes.func.isRequired,
 };
 
 export default SideNav;
