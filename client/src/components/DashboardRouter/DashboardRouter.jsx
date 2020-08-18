@@ -1,15 +1,17 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import UnderConstruction from '../UnderConstruction/UnderConstruction';
 import NotFound from '../NotFound/NotFound';
+import UnderConstruction from '../UnderConstruction/UnderConstruction';
+import DashboardComponentRoutes from './DashboardComponentRoutes';
 
 const DashboardRouter = () => (
   <div>
     <Switch>
       <Route exact strict path="/dashboard" component={UnderConstruction} />
-      <Route exact strict path="/dashboard/testing" component={UnderConstruction} />
-      {/* Fallback Route */}
-      <Route path="/dashboard" component={NotFound} />
+      {
+        DashboardComponentRoutes.map((item) => (<Route exact strict path={`/dashboard/${item.key}`} component={item.component} />))
+      }
+      <Route path="*" component={NotFound} />
     </Switch>
   </div>
 );
