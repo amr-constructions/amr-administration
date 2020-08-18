@@ -1,8 +1,9 @@
 import { Layout, Menu } from 'antd';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import logo from '../../assets/img/amr_logo_white.png';
+import replaceAll from '../../utils/StringUtils';
 import './SideNav.css';
 import MenuItems from './SideNavItems';
 
@@ -11,7 +12,7 @@ const { SubMenu } = Menu;
 
 const SideNav = ({ collapsed, navigate }) => {
   const handleClick = (e) => {
-    navigate('/dashboard');
+    navigate(`/dashboard/${e.item.props.navigate}`);
   };
 
   return (
@@ -36,7 +37,7 @@ const SideNav = ({ collapsed, navigate }) => {
           let menuItemToRender = '';
           if (!menuItem.parent || !menuItem.children || !menuItem.children.length) {
             menuItemToRender = (
-              <Menu.Item key={menuItem.id} icon={menuIcon}>
+              <Menu.Item key={menuItem.id} icon={menuIcon} navigate={replaceAll(menuItem.title.toLowerCase(), ' ', '_')}>
                 {menuItem.title}
               </Menu.Item>
             );
@@ -47,7 +48,11 @@ const SideNav = ({ collapsed, navigate }) => {
                   menuItem.children.map((SubMenuItem) => {
                     const subMenuIcon = React.createElement(SubMenuItem.icon);
                     return (
-                      <Menu.Item key={SubMenuItem.id} icon={subMenuIcon}>
+                      <Menu.Item
+                        key={SubMenuItem.id}
+                        icon={subMenuIcon}
+                        navigate={replaceAll(`${menuItem.title.toLowerCase()}/${SubMenuItem.title.toLowerCase()}`, ' ', '_')}
+                      >
                         {SubMenuItem.title}
                       </Menu.Item>
                     );
