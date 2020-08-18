@@ -1,4 +1,5 @@
 import UnderConstruction from '../UnderConstruction/UnderConstruction';
+import AccountsHead from '../AccountsManagement/AccountsHead/AccountsHead';
 
 export default [
   {
@@ -7,7 +8,7 @@ export default [
   },
   {
     key: 'accounts_management/accounts_head',
-    component: UnderConstruction,
+    component: AccountsHead,
   },
   {
     key: 'work_contracts/add_new_work',
