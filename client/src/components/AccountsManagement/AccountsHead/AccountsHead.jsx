@@ -1,22 +1,10 @@
 import { HomeOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import Columns from './models/TableColumns';
+import LoadTableData from './xhr/getTableData';
 import './AccountsHead.css';
-
-const data = [
-  {
-    key: 1,
-    id: '1',
-    name: 'Supervisor\'s account',
-    type: 'Cash In Hand',
-    op_bal: '0',
-    curr_bal: '0',
-    created_on: new Date(),
-    actions: 'To Do',
-  },
-];
 
 const navigationPath = [
   {
@@ -37,20 +25,42 @@ const navigationPath = [
   },
 ];
 
-const AccountsHead = () => (
-  <div>
-    <NavigationPath path={navigationPath} />
-    <Table
-      columns={Columns}
-      dataSource={data}
-      bordered
-      title={() => 'List Of Account Heads'}
-      className="accountsHead_Table"
-      pagination={{
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
-      }}
-    />
-  </div>
-);
+const AccountsHead = () => {
+  const [ state, setState ] = useState({
+    data: [],
+  });
+
+  useEffect(() => {
+    LoadTableData().then((response) => {
+      setState((prevState) => ({
+        ...prevState,
+        data: response.data,
+      }));
+    }).catch(() => {
+      setState((prevState) => ({
+        ...prevState,
+        data: [],
+      }));
+    });
+
+    /* Empty array means, this hook is run only once when the component is mounted */
+  }, []);
+
+  return (
+    <div>
+      <NavigationPath path={navigationPath} />
+      <Table
+        columns={Columns}
+        dataSource={state.data}
+        bordered
+        title={() => 'List Of Account Heads'}
+        className="accountsHead_Table"
+        pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
+        }}
+      />
+    </div>
+  );
+};
 
 export default AccountsHead;
