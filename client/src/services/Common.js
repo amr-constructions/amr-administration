@@ -1,4 +1,5 @@
 import Constants from '../constants/Constants';
+import Config from '../config/config';
 
 const initResponseObject = () => ({
   code: Constants.SUCCESS,
@@ -6,7 +7,7 @@ const initResponseObject = () => ({
 
 const buildResponseObject = (response, module, errorCode) => {
   response.code = errorCode;
-  response.debugCode = `${Constants.CLIENT_PREFIX}${module}_${errorCode}`;
+  response.debugCode = `${Config.CLIENT_PREFIX}${module}_${errorCode}`;
   response.reason = Constants.API_ERRORS[module][response.code];
 };
 
