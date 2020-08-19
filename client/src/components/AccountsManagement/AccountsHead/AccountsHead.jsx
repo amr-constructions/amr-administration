@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import React from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import './AccountsHead.css';
+import { dateFormatter, currencyFormatter } from '../../../utils/LocaleUtils';
 
 const columns = [
   {
@@ -23,16 +24,19 @@ const columns = [
     className: 'column-money',
     dataIndex: 'op_bal',
     align: 'right',
+    render: (amount) => <span>{currencyFormatter(amount)}</span>,
   },
   {
     title: 'Current Balance',
     className: 'column-money',
     dataIndex: 'curr_bal',
     align: 'right',
+    render: (amount) => <span>{currencyFormatter(amount)}</span>,
   },
   {
     title: 'Created On',
     dataIndex: 'created_on',
+    render: (date) => <span>{dateFormatter(date)}</span>,
   },
   {
     title: 'Actions',
@@ -50,7 +54,7 @@ const data = [
     type: 'Cash In Hand',
     op_bal: '0',
     curr_bal: '0',
-    created_on: new Date().getDate(),
+    created_on: new Date(),
     actions: 'To Do',
   },
 ];
