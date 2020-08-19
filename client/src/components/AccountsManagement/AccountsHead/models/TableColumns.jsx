@@ -1,5 +1,7 @@
+import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Button, Space, Tooltip } from 'antd';
 import React from 'react';
-import { dateFormatter, currencyFormatter } from '../../../../utils/LocaleUtils';
+import { currencyFormatter, dateFormatter } from '../../../../utils/LocaleUtils';
 
 export default [
   {
@@ -38,6 +40,16 @@ export default [
     title: 'Actions',
     dataIndex: 'actions',
     fixed: 'right',
-    width: 100,
+    align: 'center',
+    render: (text, record) => (
+      <Space size="large" align="end">
+        <Tooltip title="View All Transactions">
+          <Button type="primary" size="medium" shape="circle" data-record={record} icon={<UnorderedListOutlined />} />
+        </Tooltip>
+        <Tooltip title="Edit Account Details">
+          <Button type="primary" size="medium" shape="circle" data-record={record} icon={<EditOutlined />} />
+        </Tooltip>
+      </Space>
+    ),
   },
 ];
