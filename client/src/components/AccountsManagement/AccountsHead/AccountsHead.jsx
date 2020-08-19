@@ -7,6 +7,7 @@ const navigationPath = [
     level: 0,
     title: 'Dashboard',
     icon: HomeOutlined,
+    route: '/dashboard',
   },
   {
     level: 1,
