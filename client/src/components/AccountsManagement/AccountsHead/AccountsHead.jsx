@@ -1,10 +1,11 @@
-import { HomeOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
+import TableTitle from '../../TableTitle/TableTitle';
+import './AccountsHead.css';
 import Columns from './models/TableColumns';
 import LoadTableData from './xhr/getTableData';
-import './AccountsHead.css';
 
 const navigationPath = [
   {
@@ -24,6 +25,10 @@ const navigationPath = [
     icon: MoneyCollectTwoTone,
   },
 ];
+
+const clickHandler = () => {
+  /* Click Handler For Button */
+};
 
 const AccountsHead = () => {
   const [ state, setState ] = useState({
@@ -53,7 +58,17 @@ const AccountsHead = () => {
         columns={Columns}
         dataSource={state.data}
         bordered
-        title={() => 'List Of Account Heads'}
+        title={() => (
+          <TableTitle
+            title="List Of Account Heads"
+            button={{
+              icon: AppstoreAddOutlined,
+              type: 'primary',
+              label: 'New Account Head',
+              onClick: clickHandler,
+            }}
+          />
+        )}
         className="accountsHead_Table"
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
