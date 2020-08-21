@@ -14,11 +14,11 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
     const { value } = e.target;
     if (/^-?\d*(\.\d*)?$/.test(value) || value === '' || value === '-') {
       formRef.current.setFieldsValue({
-        account_opening_balance: value,
+        opening_balance: value,
       });
     } else {
       formRef.current.setFieldsValue({
-        account_opening_balance: value.slice(0, -1),
+        opening_balance: value.slice(0, -1),
       });
     }
   };
@@ -31,7 +31,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
     }
 
     formRef.current.setFieldsValue({
-      account_opening_balance: parseFloat(value).toFixed(2),
+      opening_balance: parseFloat(value).toFixed(2),
     });
   };
 
@@ -70,7 +70,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
       >
 
         <Form.Item
-          name="account_type"
+          name="type"
           label="Account Type"
           rules={[
             {
@@ -93,7 +93,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
         </Form.Item>
 
         <Form.Item
-          name="account_head_name"
+          name="head_name"
           label="Account Head Name"
           rules={[
             {
@@ -112,7 +112,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
         </Form.Item>
 
         <Form.Item
-          name="account_opening_balance"
+          name="opening_balance"
           label="Opening Balance (On Account Creation)"
           initialValue="0.00"
           rules={[

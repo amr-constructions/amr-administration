@@ -11,23 +11,23 @@ export default [
   },
   {
     title: 'Account Head Name',
-    dataIndex: 'name',
+    dataIndex: 'head_name',
   },
   {
     title: 'Account Type',
     dataIndex: 'type',
   },
   {
-    title: 'Operational Balance',
+    title: 'Opening Balance',
     className: 'column-money',
-    dataIndex: 'op_bal',
+    dataIndex: 'opening_balance',
     align: 'right',
     render: (amount) => <span>{currencyFormatter(amount)}</span>,
   },
   {
     title: 'Current Balance',
     className: 'column-money',
-    dataIndex: 'curr_bal',
+    dataIndex: 'current_balance',
     align: 'right',
     render: (amount) => <span>{currencyFormatter(amount)}</span>,
   },
