@@ -1,5 +1,5 @@
-import { AppstoreAddOutlined, CheckOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
-import { Button, Modal, Table } from 'antd';
+import { AppstoreAddOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
+import { Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
@@ -28,8 +28,6 @@ const navigationPath = [
 ];
 
 const AccountsHead = () => {
-  const formRef = React.createRef();
-
   const [ state, setState ] = useState({
     data: [],
     visible: false,
@@ -88,32 +86,7 @@ const AccountsHead = () => {
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
         }}
       />
-      <Modal
-        title="Create Account Head"
-        visible={state.visible}
-        onCancel={() => {
-          setState((prevState) => ({
-            ...prevState,
-            visible: false,
-          }));
-          formRef.current.resetFields();
-        }}
-        footer={[
-          <Button
-            type="primary"
-            loading={false}
-            onClick={() => {
-              formRef.current.submit();
-            }}
-            disabled={state.modalSubmit}
-          >
-            Create
-            <CheckOutlined />
-          </Button>,
-        ]}
-      >
-        <NewAccountHeadForm onSubmit={submitNewAccountForm} state={state} formRef={formRef} />
-      </Modal>
+      <NewAccountHeadForm onSubmit={submitNewAccountForm} state={state} setState={setState} />
     </div>
   );
 };
