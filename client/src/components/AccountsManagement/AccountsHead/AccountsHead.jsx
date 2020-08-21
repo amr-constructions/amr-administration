@@ -1,4 +1,4 @@
-import { AppstoreAddOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
@@ -33,6 +33,7 @@ const AccountsHead = () => {
     visible: false,
     newAccountHeadLoading: false,
     modalSubmit: false,
+    tableLoading: true,
   });
 
   const newAccountHead = () => {
@@ -47,11 +48,13 @@ const AccountsHead = () => {
       setState((prevState) => ({
         ...prevState,
         data: response.data,
+        tableLoading: false,
       }));
     }).catch(() => {
       setState((prevState) => ({
         ...prevState,
         data: [],
+        tableLoading: false,
       }));
     });
 
@@ -84,6 +87,12 @@ const AccountsHead = () => {
         className="accountsHead_Table"
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
+        }}
+        loading={{
+          indicator: (<LoadingOutlined />),
+          size: 'large',
+          tip: 'Loading Data...',
+          spinning: state.tableLoading,
         }}
       />
       <NewAccountHeadForm onSubmit={submitNewAccountForm} state={state} setState={setState} />
