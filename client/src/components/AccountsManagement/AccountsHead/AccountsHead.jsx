@@ -6,8 +6,8 @@ import TableTitle from '../../TableTitle/TableTitle';
 import './AccountsHead.css';
 import Columns from './models/TableColumns';
 import NewAccountHeadForm from './NewAccountHeadForm';
-import LoadTableData from './xhr/getTableData';
-import AddNewAccountHead from './xhr/addNewAccountHead';
+import Services from './services/entry';
+import Constants from '../../../constants/Constants';
 
 const navigationPath = [
   {
@@ -48,7 +48,7 @@ const AccountsHead = () => {
   };
 
   useEffect(() => {
-    LoadTableData().then((response) => {
+    Services[Constants.ACCOUNTS_MGMT.GET_ACCOUNT_HEADS]().then((response) => {
       setState((prevState) => ({
         ...prevState,
         data: response.data,
@@ -71,7 +71,7 @@ const AccountsHead = () => {
       modalSubmit: true,
     }));
 
-    AddNewAccountHead(values).then((response) => {
+    Services[Constants.ACCOUNTS_MGMT.CREATE_ACCOUNT_HEAD](values).then((response) => {
       setState((prevState) => ({
         ...prevState,
         tableLoading: true,
