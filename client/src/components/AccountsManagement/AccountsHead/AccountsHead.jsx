@@ -37,6 +37,9 @@ const AccountsHead = () => {
     tableLoading: true,
   });
 
+  const formRef = useRef(null);
+  const firstInputRef = useRef(null);
+
   const newAccountHead = () => {
     setState((prevState) => ({
       ...prevState,
@@ -74,6 +77,9 @@ const AccountsHead = () => {
         tableLoading: true,
         modalSubmit: false,
       }));
+
+      formRef.current.resetFields();
+      firstInputRef.current.focus();
 
       setState((prevState) => {
         const newData = prevState.data.slice(0);
@@ -122,7 +128,7 @@ const AccountsHead = () => {
           spinning: state.tableLoading,
         }}
       />
-      <NewAccountHeadForm onSubmit={submitNewAccountForm} state={state} setState={setState} />
+      <NewAccountHeadForm parentFormRef={formRef} firstInputRef={firstInputRef} onSubmit={submitNewAccountForm} state={state} setState={setState} />
     </div>
   );
 };

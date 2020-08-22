@@ -7,7 +7,22 @@ import './AccountsHead.css';
 
 const { Option } = Select;
 
-const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
+const mergeRefs = (...refs) => {
+  const filteredRefs = refs.filter(Boolean);
+  if (!filteredRefs.length) return null;
+  if (filteredRefs.length === 0) return filteredRefs[0];
+  return (inst) => {
+    for (let i = 0, l = filteredRefs.length; i < l; ++i) {
+      if (typeof ref === 'function') {
+        filteredRefs[i](inst);
+      } else if (filteredRefs[i]) {
+        filteredRefs[i].current = inst;
+      }
+    }
+  };
+};
+
+const NewAccountHeadForm = ({ onSubmit, state, setState, parentFormRef, firstInputRef }) => {
   const formRef = React.createRef();
 
   const imitateNumberInput = (e) => {
@@ -63,7 +78,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
     >
       <Form
         name="new-account-form"
-        ref={formRef}
+        ref={mergeRefs(formRef, parentFormRef)}
         onFinish={onSubmit}
         hideRequiredMark
         layout="vertical"
@@ -86,6 +101,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             disabled={state.modalSubmit}
+            ref={firstInputRef}
           >
             <Option value="bank">Bank Account</Option>
             <Option value="expense">Expense Account</Option>
@@ -148,6 +164,18 @@ NewAccountHeadForm.propTypes = {
     newAccountHeadLoading: PropTypes.bool,
   }).isRequired,
   setState: PropTypes.func.isRequired,
+  parentFormRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({
+      current: PropTypes.instanceOf(Element),
+    }),
+  ]).isRequired,
+  firstInputRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({
+      current: PropTypes.instanceOf(Element),
+    }),
+  ]).isRequired,
 };
 
 export default NewAccountHeadForm;
