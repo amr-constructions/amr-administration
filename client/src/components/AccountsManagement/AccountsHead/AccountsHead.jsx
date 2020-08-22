@@ -1,5 +1,5 @@
 import { AppstoreAddOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
@@ -81,6 +81,8 @@ const AccountsHead = () => {
       formRef.current.resetFields();
       firstInputRef.current.focus();
 
+      message.success('New Account Head Added Successfully');
+
       setState((prevState) => {
         const newData = prevState.data.slice(0);
         newData.push(response.data);
@@ -96,6 +98,8 @@ const AccountsHead = () => {
         ...prevState,
         tableLoading: false,
       }));
+
+      message.error('Failed To Create Account Head');
     });
   };
 
