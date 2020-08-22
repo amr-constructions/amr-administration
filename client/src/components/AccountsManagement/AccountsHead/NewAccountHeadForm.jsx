@@ -85,7 +85,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
             placeholder="Account Type"
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            disabled={state.newAccountHeadLoading}
+            disabled={state.modalSubmit}
           >
             <Option value="bank">Bank Account</Option>
             <Option value="expense">Expense Account</Option>
@@ -106,7 +106,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
             size="large"
             placeholder="Account Head Name"
             prefix={<BankOutlined />}
-            disabled={state.newAccountHeadLoading}
+            disabled={state.modalSubmit}
             onPressEnter={() => formRef.current.submit()}
           />
         </Form.Item>
@@ -124,7 +124,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }) => {
         >
           <Input
             addonBefore={config.LOCALE.currencySymbol}
-            disabled={state.newAccountHeadLoading}
+            disabled={state.modalSubmit}
             size="large"
             style={{
               width: '100%',

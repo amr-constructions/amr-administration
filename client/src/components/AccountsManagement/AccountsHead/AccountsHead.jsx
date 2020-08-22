@@ -1,12 +1,13 @@
 import { AppstoreAddOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
 import './AccountsHead.css';
 import Columns from './models/TableColumns';
 import NewAccountHeadForm from './NewAccountHeadForm';
 import LoadTableData from './xhr/getTableData';
+import AddNewAccountHead from './xhr/addNewAccountHead';
 
 const navigationPath = [
   {
@@ -62,8 +63,34 @@ const AccountsHead = () => {
   }, []);
 
   const submitNewAccountForm = async (values) => {
-    console.log('form submitted');
-    console.log(values);
+    setState((prevState) => ({
+      ...prevState,
+      modalSubmit: true,
+    }));
+
+    AddNewAccountHead(values).then((response) => {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: true,
+        modalSubmit: false,
+      }));
+
+      setState((prevState) => {
+        const newData = prevState.data.slice(0);
+        newData.push(response.data);
+
+        return ({
+          ...prevState,
+          data: newData,
+          tableLoading: false,
+        });
+      });
+    }).catch(() => {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+      }));
+    });
   };
 
   return (

@@ -6,7 +6,7 @@ const sampleData = [
     type: 'Cash In Hand',
     opening_balance: '0',
     current_balance: '0',
-    created_on: new Date(),
+    created_on: new Date().getTime(),
     actions: 'To Do',
   },
 ];
