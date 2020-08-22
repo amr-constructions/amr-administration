@@ -1,6 +1,9 @@
+import Constants from '../../../../constants/Constants';
+import { buildResponseObject, initResponseObject } from '../../../../services/Common';
+
 const sampleData = [
   {
-    key: 1,
+    key: '1',
     id: '1',
     head_name: 'Supervisor\'s account',
     type: 'Cash In Hand',
@@ -11,12 +14,14 @@ const sampleData = [
   },
 ];
 
-export default () => new Promise((resolve, reject) => {
-  if (sampleData) {
-    resolve({
-      data: sampleData,
-    });
+export default async () => {
+  const response = initResponseObject();
+
+  if (sampleData == null) {
+    buildResponseObject(response, Constants.ACCOUNTS_MGMT.MODULE, 500);
   } else {
-    reject(new Error('Error while loading data'));
+    response.data = sampleData;
   }
-});
+
+  return response;
+};

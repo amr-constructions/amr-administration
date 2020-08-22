@@ -1,17 +1,21 @@
-export default (data) => new Promise((resolve, reject) => {
-  if (data) {
-    setTimeout(() => {
-      resolve({
-        data: {
-          ...data,
-          id: Math.floor(Math.random() * 100),
-          key: Math.floor(Math.random() * 100),
-          current_balance: data.opening_balance,
-          created_on: new Date(),
-        },
-      });
-    }, 1750);
+import Constants from '../../../../constants/Constants';
+import { buildResponseObject, initResponseObject } from '../../../../services/Common';
+
+export default async (data) => {
+  const response = initResponseObject();
+
+  if (!data) {
+    buildResponseObject(response, Constants.ACCOUNTS_MGMT.MODULE, 501);
   } else {
-    reject(new Error('New Account Head Creation Failed'));
+    const uid = Math.floor(Math.random() * 100).toString();
+    response.data = {
+      ...data,
+      id: uid,
+      key: uid,
+      current_balance: data.opening_balance,
+      created_on: new Date().getTime(),
+    };
   }
-});
+
+  return response;
+};

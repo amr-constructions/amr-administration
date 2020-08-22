@@ -48,19 +48,27 @@ const AccountsHead = () => {
   };
 
   useEffect(() => {
-    Services[Constants.ACCOUNTS_MGMT.GET_ACCOUNT_HEADS]().then((response) => {
+    const getAccountHeadsList = async function () {
+      const response = await Services[Constants.ACCOUNTS_MGMT.GET_ACCOUNT_HEADS]();
+      if (response.code !== Constants.SUCCESS) {
+        setState((prevState) => ({
+          ...prevState,
+          data: [],
+          tableLoading: false,
+        }));
+
+        message.error(`${response.reason} [${response.debugCode}]`);
+        return;
+      }
+
       setState((prevState) => ({
         ...prevState,
         data: response.data,
         tableLoading: false,
       }));
-    }).catch(() => {
-      setState((prevState) => ({
-        ...prevState,
-        data: [],
-        tableLoading: false,
-      }));
-    });
+    };
+
+    getAccountHeadsList();
 
     /* Empty array means, this hook is run only once when the component is mounted */
   }, []);
@@ -71,35 +79,38 @@ const AccountsHead = () => {
       modalSubmit: true,
     }));
 
-    Services[Constants.ACCOUNTS_MGMT.CREATE_ACCOUNT_HEAD](values).then((response) => {
-      setState((prevState) => ({
-        ...prevState,
-        tableLoading: true,
-        modalSubmit: false,
-      }));
-
-      formRef.current.resetFields();
-      firstInputRef.current.focus();
-
-      message.success('New Account Head Added Successfully');
-
-      setState((prevState) => {
-        const newData = prevState.data.slice(0);
-        newData.push(response.data);
-
-        return ({
-          ...prevState,
-          data: newData,
-          tableLoading: false,
-        });
-      });
-    }).catch(() => {
+    const response = await Services[Constants.ACCOUNTS_MGMT.CREATE_ACCOUNT_HEAD](values);
+    if (response.code !== Constants.SUCCESS) {
       setState((prevState) => ({
         ...prevState,
         tableLoading: false,
+        modalSubmit: false,
       }));
 
-      message.error('Failed To Create Account Head');
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      tableLoading: true,
+      modalSubmit: false,
+    }));
+
+    formRef.current.resetFields();
+    firstInputRef.current.focus();
+
+    message.success('New Account Head Added Successfully');
+
+    setState((prevState) => {
+      const newData = prevState.data.slice(0);
+      newData.push(response.data);
+
+      return ({
+        ...prevState,
+        data: newData,
+        tableLoading: false,
+      });
     });
   };
 
