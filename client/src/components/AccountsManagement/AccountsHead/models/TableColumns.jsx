@@ -3,6 +3,11 @@ import { Button, Space, Tooltip } from 'antd';
 import React from 'react';
 import { currencyFormatter, dateFormatter } from '../../../../utils/LocaleUtils';
 
+const accountTypes = {
+  bank: 'Bank Account',
+  expense: 'Expense Account',
+};
+
 export default [
   {
     title: '#',
@@ -16,6 +21,7 @@ export default [
   {
     title: 'Account Type',
     dataIndex: 'type',
+    render: (type) => <span>{accountTypes[type]}</span>,
   },
   {
     title: 'Opening Balance',

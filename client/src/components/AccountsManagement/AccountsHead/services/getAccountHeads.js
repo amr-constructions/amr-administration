@@ -6,11 +6,10 @@ const sampleData = [
     key: '1',
     id: '1',
     head_name: 'Supervisor\'s account',
-    type: 'Cash In Hand',
+    type: 'expense',
     opening_balance: '0',
     current_balance: '0',
     created_on: new Date().getTime(),
-    actions: 'To Do',
   },
 ];
 
