@@ -7,24 +7,7 @@ import './AccountsHead.css';
 
 const { Option } = Select;
 
-const mergeRefs = (...refs) => {
-  const filteredRefs = refs.filter(Boolean);
-  if (!filteredRefs.length) return null;
-  if (filteredRefs.length === 0) return filteredRefs[0];
-  return (inst) => {
-    for (let i = 0, l = filteredRefs.length; i < l; ++i) {
-      if (typeof ref === 'function') {
-        filteredRefs[i](inst);
-      } else if (filteredRefs[i]) {
-        filteredRefs[i].current = inst;
-      }
-    }
-  };
-};
-
-const NewAccountHeadForm = ({ onSubmit, state, setState, parentFormRef, firstInputRef }) => {
-  const formRef = React.createRef();
-
+const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
   const imitateNumberInput = (e) => {
     const { value } = e.target;
     if (/^-?\d*(\.\d*)?$/.test(value) || value === '' || value === '-') {
@@ -80,7 +63,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState, parentFormRef, firstInp
     >
       <Form
         name="new-account-form"
-        ref={mergeRefs(formRef, parentFormRef)}
+        ref={formRef}
         onFinish={onSubmit}
         hideRequiredMark
         layout="vertical"
@@ -180,4 +163,4 @@ NewAccountHeadForm.propTypes = {
   ]).isRequired,
 };
 
-export default NewAccountHeadForm;
+export default React.forwardRef(NewAccountHeadForm);

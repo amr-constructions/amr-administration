@@ -141,7 +141,7 @@ const AccountsHead = () => {
           spinning: state.tableLoading,
         }}
       />
-      <NewAccountHeadForm parentFormRef={formRef} onSubmit={submitNewAccountForm} state={state} setState={setState} />
+      <NewAccountHeadForm ref={formRef} onSubmit={submitNewAccountForm} state={state} setState={setState} />
     </div>
   );
 };
