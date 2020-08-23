@@ -6,5 +6,6 @@ export default {
     currency: 'INR',
     timeStyle: 'short',
     dateStyle: 'medium',
+    currencySymbol: '₹',
   },
 };
