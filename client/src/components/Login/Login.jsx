@@ -1,7 +1,7 @@
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Form, Input, message, Row, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from '../../assets/img/amr_logo_black.png';
 import Constants from '../../constants/Constants';
 import Authenticate from '../../services/Auth';
@@ -10,9 +10,13 @@ import './Login.css';
 const { Title } = Typography;
 
 function Login({ history }) {
+  const userNameRef = useRef(null);
+  const passwordRef = useRef(null);
+
   const [ states, setStates ] = useState({
     loading: false,
     isToastShown: false,
+    lastFocus: userNameRef,
   });
 
   const submitLoginForm = async (values) => {
@@ -32,6 +36,8 @@ function Login({ history }) {
         isToastShown: true,
       }));
 
+      states.lastFocus.current.focus();
+
       message.error(`${response.reason} [${response.debugCode}]`);
       return;
     }
@@ -45,6 +51,10 @@ function Login({ history }) {
     /* Goto dashboard */
     history.push('/dashboard');
   };
+
+  useEffect(() => {
+    userNameRef.current.focus();
+  }, []);
 
   return (
     <Row
@@ -83,6 +93,11 @@ function Login({ history }) {
                 placeholder="Username"
                 prefix={<UserOutlined />}
                 disabled={states.loading}
+                ref={userNameRef}
+                onFocus={() => setStates((prevState) => ({
+                  ...prevState,
+                  lastFocus: userNameRef,
+                }))}
               />
             </Form.Item>
 
@@ -101,6 +116,11 @@ function Login({ history }) {
                 prefix={<LockOutlined />}
                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 disabled={states.loading}
+                ref={passwordRef}
+                onFocus={() => setStates((prevState) => ({
+                  ...prevState,
+                  lastFocus: passwordRef,
+                }))}
               />
             </Form.Item>
 
