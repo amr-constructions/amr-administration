@@ -41,7 +41,9 @@ const NewAccountHeadForm = ({ onSubmit, state, setState, parentFormRef, firstInp
   const formatValue = (e) => {
     let { value } = e.target;
 
-    if (value.charAt(value.length - 1) === '.' || value === '-') {
+    if (!value || value === '-' || value === '.') {
+      value = 0;
+    } else if (value.charAt(value.length - 1) === '.') {
       value = value.slice(0, -1);
     }
 
