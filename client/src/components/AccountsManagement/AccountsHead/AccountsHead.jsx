@@ -1,13 +1,13 @@
-import { AppstoreAddOutlined, HomeOutlined, MoneyCollectTwoTone, UserOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Table, message } from 'antd';
-import React, { useEffect, useState, useRef } from 'react';
+import { AppstoreAddOutlined, HomeOutlined, LoadingOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
+import { message, Table } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
 import './AccountsHead.css';
 import Columns from './models/TableColumns';
 import NewAccountHeadForm from './NewAccountHeadForm';
 import Services from './services/entry';
-import Constants from '../../../constants/Constants';
 
 const navigationPath = [
   {
@@ -38,7 +38,6 @@ const AccountsHead = () => {
   });
 
   const formRef = useRef(null);
-  const firstInputRef = useRef(null);
 
   const newAccountHead = () => {
     setState((prevState) => ({
@@ -98,7 +97,6 @@ const AccountsHead = () => {
     }));
 
     formRef.current.resetFields();
-    firstInputRef.current.focus();
 
     message.success('New Account Head Added Successfully');
 
@@ -143,7 +141,7 @@ const AccountsHead = () => {
           spinning: state.tableLoading,
         }}
       />
-      <NewAccountHeadForm parentFormRef={formRef} firstInputRef={firstInputRef} onSubmit={submitNewAccountForm} state={state} setState={setState} />
+      <NewAccountHeadForm parentFormRef={formRef} onSubmit={submitNewAccountForm} state={state} setState={setState} />
     </div>
   );
 };

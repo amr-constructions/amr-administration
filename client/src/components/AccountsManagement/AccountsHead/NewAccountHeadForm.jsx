@@ -103,7 +103,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState, parentFormRef, firstInp
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             disabled={state.modalSubmit}
-            ref={firstInputRef}
+            autoFocus
           >
             <Option value="bank">Bank Account</Option>
             <Option value="expense">Expense Account</Option>
