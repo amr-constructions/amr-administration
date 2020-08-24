@@ -149,18 +149,6 @@ NewAccountHeadForm.propTypes = {
     newAccountHeadLoading: PropTypes.bool,
   }).isRequired,
   setState: PropTypes.func.isRequired,
-  parentFormRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.instanceOf(Element),
-    }),
-  ]).isRequired,
-  firstInputRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({
-      current: PropTypes.instanceOf(Element),
-    }),
-  ]).isRequired,
 };
 
 export default React.forwardRef(NewAccountHeadForm);
