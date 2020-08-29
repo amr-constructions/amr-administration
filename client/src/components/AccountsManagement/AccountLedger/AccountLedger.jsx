@@ -71,7 +71,7 @@ const AccountLedger = ({ match }) => {
     };
 
     getAccountHeadsList();
-  }, []);
+  }, [ match.params.id ]);
 
   const searchAccountTxns = async (values) => {
     if (state.isToastShown) {
