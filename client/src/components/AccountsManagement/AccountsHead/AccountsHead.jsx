@@ -1,5 +1,6 @@
 import { AppstoreAddOutlined, HomeOutlined, LoadingOutlined, MoneyCollectTwoTone, UserOutlined } from '@ant-design/icons';
 import { message, Table } from 'antd';
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
@@ -29,7 +30,7 @@ const navigationPath = [
   },
 ];
 
-const AccountsHead = () => {
+const AccountsHead = ({ history }) => {
   const [ state, setState ] = useState({
     data: [],
     visible: false,
@@ -59,7 +60,7 @@ const AccountsHead = () => {
   };
 
   const viewAccountTxns = (e, { id }) => {
-    console.log(`Have to go to account_txns/${id}`);
+    history.push(`account_ledger/${id}`);
   };
 
   useEffect(() => {
@@ -218,6 +219,12 @@ const AccountsHead = () => {
       <EditAccountHeadForm onSubmit={updateAccountForm} state={state} setState={setState} />
     </div>
   );
+};
+
+AccountsHead.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default AccountsHead;

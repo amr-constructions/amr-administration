@@ -1,5 +1,6 @@
-import UnderConstruction from '../UnderConstruction/UnderConstruction';
+import AccountLedger from '../AccountsManagement/AccountLedger/AccountLedger';
 import AccountsHead from '../AccountsManagement/AccountsHead/AccountsHead';
+import UnderConstruction from '../UnderConstruction/UnderConstruction';
 
 export default [
   {
@@ -9,6 +10,14 @@ export default [
   {
     key: 'accounts_management/accounts_head',
     component: AccountsHead,
+  },
+  {
+    key: 'accounts_management/account_ledger/:id',
+    component: AccountLedger,
+  },
+  {
+    key: 'accounts_management/account_ledger',
+    component: AccountLedger,
   },
   {
     key: 'work_contracts/add_new_work',
