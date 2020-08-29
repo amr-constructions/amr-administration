@@ -1,5 +1,5 @@
-import Constants from '../../../../constants/Constants';
-import { buildResponseObject, initResponseObject } from '../../../../services/Common';
+import Constants from '../../../constants/Constants';
+import { buildResponseObject, initResponseObject } from '../../../services/Common';
 
 const sampleData = [
   {

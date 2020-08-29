@@ -7,5 +7,6 @@ export default {
     timeStyle: 'short',
     dateStyle: 'medium',
     currencySymbol: '₹',
+    dateFormat: 'DD-MMM-YYYY',
   },
 };

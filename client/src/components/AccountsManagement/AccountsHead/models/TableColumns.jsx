@@ -50,7 +50,7 @@ export default ({ handlers }) => [
     render: (text, record) => (
       <Space size="large" align="end">
         <Tooltip title="View All Transactions">
-          <Button type="primary" size="medium" shape="circle" data-record={record} icon={<UnorderedListOutlined />} />
+          <Button type="primary" size="medium" shape="circle" onClick={(e) => handlers.viewAccountTxns(e, record)} data-record={record} icon={<UnorderedListOutlined />} />
         </Tooltip>
         <Tooltip title="Edit Account Details">
           <Button type="primary" size="medium" shape="circle" onClick={(e) => handlers.editAccount(e, record)} data-record={record} icon={<EditOutlined />} />
