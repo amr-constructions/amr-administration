@@ -1,9 +1,11 @@
 import { HomeOutlined, PropertySafetyTwoTone, SearchOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Form, Select, Space } from 'antd';
+import { Button, Card, DatePicker, Form, message, Select, Space } from 'antd';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import config from '../../../config/config';
+import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
+import Services from '../services/entry';
 import './AccountLedger.css';
 
 const { RangePicker } = DatePicker;
@@ -30,10 +32,30 @@ const navigationPath = [
 const AccountLedger = () => {
   const [ state, setState ] = useState({
     submit: false,
-    options: [],
+    accountNames: [],
   });
 
   const disabledDate = (current) => current && current >= moment().endOf('day');
+
+  useEffect(() => {
+    const getAccountHeadsList = async function () {
+      const response = await Services[Constants.ACCOUNTS_MGMT.GET_ACCOUNT_HEADS]();
+      if (response.code !== Constants.SUCCESS) {
+        message.error(`${response.reason} [${response.debugCode}]`);
+        return;
+      }
+
+      setState((prevState) => ({
+        ...prevState,
+        accountNames: response.data.map((item) => ({
+          label: item.head_name,
+          value: item.id,
+        })),
+      }));
+    };
+
+    getAccountHeadsList();
+  }, []);
 
   return (
     <div>
@@ -60,11 +82,13 @@ const AccountLedger = () => {
                 showSearch
                 size="large"
                 placeholder="Account Name"
-                optionFilterProp="children"
-                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                filterOption={(input, option) => option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                 disabled={state.submit}
                 autoFocus
-                options={state.options}
+                options={state.accountNames}
+                style={{
+                  minWidth: 350,
+                }}
               />
             </Form.Item>
 
