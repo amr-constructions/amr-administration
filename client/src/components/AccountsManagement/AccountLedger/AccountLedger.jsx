@@ -1,5 +1,6 @@
 import { HomeOutlined, PropertySafetyTwoTone, SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, DatePicker, Form, Select, Space } from 'antd';
+import moment from 'moment';
 import React, { useState } from 'react';
 import config from '../../../config/config';
 import NavigationPath from '../../NavigationPath/NavigationPath';
@@ -31,6 +32,8 @@ const AccountLedger = () => {
     submit: false,
     options: [],
   });
+
+  const disabledDate = (current) => current && current >= moment().endOf('day');
 
   return (
     <div>
@@ -66,7 +69,13 @@ const AccountLedger = () => {
             </Form.Item>
 
             <Form.Item label="Time Period" name="period">
-              <RangePicker size="large" renderExtraFooter={() => 'Leave Time Period Empty To Get All Transactions'} disabled={state.submit} format={config.LOCALE.dateFormat} />
+              <RangePicker
+                size="large"
+                renderExtraFooter={() => 'Leave Time Period Empty To Get All Transactions'}
+                disabled={state.submit}
+                format={config.LOCALE.dateFormat}
+                disabledDate={disabledDate}
+              />
             </Form.Item>
 
             <Form.Item>
