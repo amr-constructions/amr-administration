@@ -1,48 +1,25 @@
-import { BankOutlined, CheckOutlined } from '@ant-design/icons';
+import { BankOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Select } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
-import config from '../../../config/config';
-import './AccountsHead.css';
 
 const { Option } = Select;
 
-const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
-  const imitateNumberInput = (e) => {
-    const { value } = e.target;
-    if (/^-?\d*(\.\d*)?$/.test(value) || value === '' || value === '-') {
-      formRef.current.setFieldsValue({
-        opening_balance: value,
-      });
-    } else {
-      formRef.current.setFieldsValue({
-        opening_balance: value.slice(0, -1),
-      });
-    }
-  };
+const EditAccountHeadForm = ({ onSubmit, state, setState }) => {
+  const formRef = React.createRef();
 
-  const formatValue = (e) => {
-    let { value } = e.target;
-
-    if (!value || value === '-' || value === '.') {
-      value = 0;
-    } else if (value.charAt(value.length - 1) === '.') {
-      value = value.slice(0, -1);
-    }
-
-    formRef.current.setFieldsValue({
-      opening_balance: parseFloat(value).toFixed(2),
-    });
-  };
+  const { editAccountHeadVisible, modalSubmit, dataForEdit } = state;
 
   return (
     <Modal
-      title="Create Account Head"
-      visible={state.visible}
+      title="Edit Account Head"
+      visible={editAccountHeadVisible}
       onCancel={() => {
         setState((prevState) => ({
           ...prevState,
-          visible: false,
+          editAccountHeadVisible: false,
+          dataForEdit: {
+          },
         }));
         formRef.current.resetFields();
       }}
@@ -50,16 +27,17 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
         <Button
           key={0}
           type="primary"
-          loading={state.modalSubmit}
+          loading={modalSubmit}
           onClick={() => {
             formRef.current.submit();
           }}
-          disabled={state.modalSubmit}
+          disabled={modalSubmit}
         >
-          Create
-          <CheckOutlined />
+          Update
+          <EditOutlined />
         </Button>,
       ]}
+      destroyOnClose
     >
       <Form
         name="new-account-form"
@@ -78,6 +56,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
               message: 'Account Type Must Be Selected!',
             },
           ]}
+          initialValue={dataForEdit.type}
         >
           <Select
             showSearch
@@ -85,7 +64,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
             placeholder="Account Type"
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            disabled={state.modalSubmit}
+            disabled={modalSubmit}
             autoFocus
           >
             <Option value="bank">Bank Account</Option>
@@ -96,6 +75,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
         <Form.Item
           name="head_name"
           label="Account Head Name"
+          initialValue={dataForEdit.head_name}
           rules={[
             {
               required: true,
@@ -107,33 +87,17 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
             size="large"
             placeholder="Account Head Name"
             prefix={<BankOutlined />}
-            disabled={state.modalSubmit}
+            disabled={modalSubmit}
             onPressEnter={() => formRef.current.submit()}
           />
         </Form.Item>
 
         <Form.Item
-          name="opening_balance"
-          label="Opening Balance (On Account Creation)"
-          initialValue="0.00"
-          rules={[
-            {
-              required: true,
-              message: 'Account Opening Balance Cannot Be Empty!',
-            },
-          ]}
+          name="id"
+          initialValue={dataForEdit.id}
+          hidden
         >
-          <Input
-            addonBefore={config.LOCALE.currencySymbol}
-            disabled={state.modalSubmit}
-            size="large"
-            style={{
-              width: '100%',
-            }}
-            onPressEnter={() => formRef.current.submit()}
-            onChange={imitateNumberInput}
-            onBlur={formatValue}
-          />
+          <Input type="text" />
         </Form.Item>
 
       </Form>
@@ -141,14 +105,19 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => {
   );
 };
 
-NewAccountHeadForm.propTypes = {
+EditAccountHeadForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   state: PropTypes.shape({
-    visible: PropTypes.bool,
+    editAccountHeadVisible: PropTypes.bool,
     modalSubmit: PropTypes.bool,
     newAccountHeadLoading: PropTypes.bool,
+    dataForEdit: PropTypes.shape({
+      type: PropTypes.string,
+      head_name: PropTypes.string,
+      id: PropTypes.string,
+    }),
   }).isRequired,
   setState: PropTypes.func.isRequired,
 };
 
-export default React.forwardRef(NewAccountHeadForm);
+export default EditAccountHeadForm;

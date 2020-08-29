@@ -5,6 +5,7 @@ import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
 import './AccountsHead.css';
+import EditAccountHeadForm from './EditAccountHeadForm';
 import Columns from './models/TableColumns';
 import NewAccountHeadForm from './NewAccountHeadForm';
 import Services from './services/entry';
@@ -35,6 +36,9 @@ const AccountsHead = () => {
     newAccountHeadLoading: false,
     modalSubmit: false,
     tableLoading: true,
+    editAccountHeadVisible: false,
+    dataForEdit: {
+    },
   });
 
   const formRef = useRef(null);
@@ -43,6 +47,14 @@ const AccountsHead = () => {
     setState((prevState) => ({
       ...prevState,
       visible: true,
+    }));
+  };
+
+  const editAccountHead = (e, record) => {
+    setState((prevState) => ({
+      ...prevState,
+      dataForEdit: record,
+      editAccountHeadVisible: true,
     }));
   };
 
@@ -112,11 +124,67 @@ const AccountsHead = () => {
     });
   };
 
+  const updateAccountForm = async (values) => {
+    setState((prevState) => ({
+      ...prevState,
+      modalSubmit: true,
+    }));
+
+    const response = await Services[Constants.ACCOUNTS_MGMT.UPDATE_ACCOUNT_HEAD](values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+        modalSubmit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      tableLoading: true,
+    }));
+
+    const idx = state.data.findIndex((item) => item.id === response.data.id);
+    if (idx === -1) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+        modalSubmit: false,
+      }));
+
+      message.error('Account Head Update Failed [CLIENT]');
+      return;
+    }
+
+    const updatedData = state.data.slice(0);
+    updatedData[idx] = {
+      ...updatedData[idx], ...response.data,
+    };
+
+    setState((prevState) => {
+      message.success('Account Head Updated Successfully');
+      return ({
+        ...prevState,
+        data: updatedData,
+        tableLoading: false,
+        editAccountHeadVisible: false,
+        modalSubmit: false,
+      });
+    });
+  };
+
   return (
     <div>
       <NavigationPath path={navigationPath} />
       <Table
-        columns={Columns}
+        columns={Columns({
+          handlers: {
+            editAccount: editAccountHead,
+          },
+        })}
         dataSource={state.data}
         bordered
         title={() => (
@@ -142,6 +210,7 @@ const AccountsHead = () => {
         }}
       />
       <NewAccountHeadForm ref={formRef} onSubmit={submitNewAccountForm} state={state} setState={setState} />
+      <EditAccountHeadForm onSubmit={updateAccountForm} state={state} setState={setState} />
     </div>
   );
 };
