@@ -33,6 +33,8 @@ const AccountLedger = () => {
   const [ state, setState ] = useState({
     submit: false,
     accountNames: [],
+    txnData: {
+    },
   });
 
   const disabledDate = (current) => current && current >= moment().endOf('day');
@@ -57,6 +59,32 @@ const AccountLedger = () => {
     getAccountHeadsList();
   }, []);
 
+  const searchAccountTxns = async (values) => {
+    setState((prevState) => ({
+      ...prevState,
+      submit: true,
+    }));
+
+    const response = await Services[Constants.ACCOUNTS_MGMT.GET_ACCOUNT_TXNS](values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        submit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      txnData: response.data,
+      submit: false,
+    }));
+
+    message.success('Account Transactions Retrieved Successfully !');
+  };
+
   return (
     <div>
       <NavigationPath path={navigationPath} />
@@ -65,6 +93,7 @@ const AccountLedger = () => {
         <Form
           layout="vertical"
           hideRequiredMark
+          onFinish={searchAccountTxns}
         >
           <Space size="large" align="end" className="account-ledger-search-form-spacer">
 
