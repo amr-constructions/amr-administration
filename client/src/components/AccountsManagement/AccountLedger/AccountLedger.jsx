@@ -7,6 +7,7 @@ import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import Services from '../services/entry';
 import './AccountLedger.css';
+import LedgerTable from './LedgerTable';
 
 const { RangePicker } = DatePicker;
 
@@ -35,6 +36,7 @@ const AccountLedger = () => {
     accountNames: [],
     txnData: {
     },
+    showResult: false,
   });
 
   const disabledDate = (current) => current && current >= moment().endOf('day');
@@ -80,6 +82,7 @@ const AccountLedger = () => {
       ...prevState,
       txnData: response.data,
       submit: false,
+      showResult: true,
     }));
 
     message.success('Account Transactions Retrieved Successfully !');
@@ -145,6 +148,11 @@ const AccountLedger = () => {
           </Space>
         </Form>
       </Card>
+
+      {
+        state.showResult ? <LedgerTable data={state.txnData} /> : null
+      }
+
     </div>
   );
 };
