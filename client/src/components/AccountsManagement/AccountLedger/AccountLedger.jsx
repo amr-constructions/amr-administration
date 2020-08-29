@@ -1,7 +1,8 @@
 import { HomeOutlined, PropertySafetyTwoTone, SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, DatePicker, Form, message, Select, Space } from 'antd';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 import config from '../../../config/config';
 import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
@@ -30,7 +31,9 @@ const navigationPath = [
   },
 ];
 
-const AccountLedger = () => {
+const AccountLedger = ({ match }) => {
+  const formRef = useRef(null);
+
   const [ state, setState ] = useState({
     submit: false,
     accountNames: [],
@@ -57,6 +60,14 @@ const AccountLedger = () => {
           value: item.id,
         })),
       }));
+
+      if (match.params.id) {
+        if (response.data.find(({ id }) => id === match.params.id)) {
+          formRef.current.setFieldsValue({
+            account_name: match.params.id,
+          });
+        }
+      }
     };
 
     getAccountHeadsList();
@@ -108,6 +119,7 @@ const AccountLedger = () => {
           layout="vertical"
           hideRequiredMark
           onFinish={searchAccountTxns}
+          ref={formRef}
         >
           <Space size="large" align="end" className="account-ledger-search-form-spacer">
 
@@ -166,6 +178,14 @@ const AccountLedger = () => {
 
     </div>
   );
+};
+
+AccountLedger.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.exact({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default AccountLedger;
