@@ -8,7 +8,7 @@ const accountTypes = {
   expense: 'Expense Account',
 };
 
-export default [
+export default ({ handlers }) => [
   {
     title: '#',
     dataIndex: 'id',
@@ -53,7 +53,7 @@ export default [
           <Button type="primary" size="medium" shape="circle" data-record={record} icon={<UnorderedListOutlined />} />
         </Tooltip>
         <Tooltip title="Edit Account Details">
-          <Button type="primary" size="medium" shape="circle" data-record={record} icon={<EditOutlined />} />
+          <Button type="primary" size="medium" shape="circle" onClick={(e) => handlers.editAccount(e, record)} data-record={record} icon={<EditOutlined />} />
         </Tooltip>
       </Space>
     ),

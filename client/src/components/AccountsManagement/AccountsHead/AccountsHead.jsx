@@ -35,6 +35,9 @@ const AccountsHead = () => {
     newAccountHeadLoading: false,
     modalSubmit: false,
     tableLoading: true,
+    editAccountHeadVisible: false,
+    dataForEdit: {
+    },
   });
 
   const formRef = useRef(null);
@@ -43,6 +46,14 @@ const AccountsHead = () => {
     setState((prevState) => ({
       ...prevState,
       visible: true,
+    }));
+  };
+
+  const editAccountHead = (e, record) => {
+    setState((prevState) => ({
+      ...prevState,
+      dataForEdit: record,
+      editAccountHeadVisible: true,
     }));
   };
 
@@ -116,7 +127,11 @@ const AccountsHead = () => {
     <div>
       <NavigationPath path={navigationPath} />
       <Table
-        columns={Columns}
+        columns={Columns({
+          handlers: {
+            editAccount: editAccountHead,
+          },
+        })}
         dataSource={state.data}
         bordered
         title={() => (
