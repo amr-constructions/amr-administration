@@ -13,6 +13,12 @@ export default [
         icon: OrderedListOutlined,
         parent: false,
       },
+      {
+        id: 1.2,
+        title: 'Account Ledger',
+        icon: OrderedListOutlined,
+        parent: false,
+      },
     ],
   },
   {
