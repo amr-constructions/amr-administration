@@ -1,0 +1,11 @@
+.account-ledger-search {
+  margin-top: 1rem;
+}
+
+.account-ledger-search-form-spacer .ant-form-item {
+  margin-right: 3rem;
+}
+
+.ant-picker-footer-extra {
+  font-weight: bold;
+}
