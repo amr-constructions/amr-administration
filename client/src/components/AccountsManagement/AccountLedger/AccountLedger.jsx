@@ -37,6 +37,7 @@ const AccountLedger = () => {
     txnData: {
     },
     showResult: false,
+    isToastShown: false,
   });
 
   const disabledDate = (current) => current && current >= moment().endOf('day');
@@ -62,6 +63,14 @@ const AccountLedger = () => {
   }, []);
 
   const searchAccountTxns = async (values) => {
+    if (state.isToastShown) {
+      message.destroy();
+      setState((prevState) => ({
+        ...prevState,
+        isToastShown: false,
+      }));
+    }
+
     setState((prevState) => ({
       ...prevState,
       submit: true,
@@ -72,6 +81,7 @@ const AccountLedger = () => {
       setState((prevState) => ({
         ...prevState,
         submit: false,
+        isToastShown: true,
       }));
 
       message.error(`${response.reason} [${response.debugCode}]`);
@@ -83,6 +93,7 @@ const AccountLedger = () => {
       txnData: response.data,
       submit: false,
       showResult: true,
+      isToastShown: true,
     }));
 
     message.success('Account Transactions Retrieved Successfully !');
