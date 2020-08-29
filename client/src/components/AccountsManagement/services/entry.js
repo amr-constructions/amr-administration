@@ -1,4 +1,4 @@
-import Constants from '../../../../constants/Constants';
+import Constants from '../../../constants/Constants';
 import CreateAccountHead from './createAccountHead';
 import GetAccountHeads from './getAccountHeads';
 import UpdateAccountHeads from './updateAccountHead';

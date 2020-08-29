@@ -5,11 +5,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
+import Services from '../services/entry';
 import './AccountsHead.css';
 import EditAccountHeadForm from './EditAccountHeadForm';
 import Columns from './models/TableColumns';
 import NewAccountHeadForm from './NewAccountHeadForm';
-import Services from './services/entry';
 
 const navigationPath = [
   {
