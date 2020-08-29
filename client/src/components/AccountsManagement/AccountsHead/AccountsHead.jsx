@@ -58,6 +58,10 @@ const AccountsHead = () => {
     }));
   };
 
+  const viewAccountTxns = (e, { id }) => {
+    console.log(`Have to go to account_txns/${id}`);
+  };
+
   useEffect(() => {
     const getAccountHeadsList = async function () {
       const response = await Services[Constants.ACCOUNTS_MGMT.GET_ACCOUNT_HEADS]();
@@ -183,6 +187,7 @@ const AccountsHead = () => {
         columns={Columns({
           handlers: {
             editAccount: editAccountHead,
+            viewAccountTxns,
           },
         })}
         dataSource={state.data}
