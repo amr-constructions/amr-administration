@@ -6,6 +6,7 @@ import moment from 'moment';
 import React, { useRef, useState } from 'react';
 import config from '../../../config/config';
 import NavigationPath from '../../NavigationPath/NavigationPath';
+import AddNewClient from './AddNewClient';
 import './AddNewWork.css';
 
 const { Option } = Select;
@@ -37,6 +38,8 @@ const AddNewWork = () => {
 
   const [ state, setState ] = useState({
     clientNames: [],
+    newClientFormVisible: false,
+    newClientName: '',
   });
 
   const imitateNumberInput = (e) => {
@@ -101,9 +104,17 @@ const AddNewWork = () => {
       const newArray = state.clientNames.slice(0);
       removeDynamicAddClientEntry(newArray);
 
+      /* Convert to Title Case */
+      const clientName = option.name
+        .split(' ')
+        .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+
       setState((prevState) => ({
         ...prevState,
         clientNames: newArray,
+        newClientName: clientName,
+        newClientFormVisible: true,
       }));
     }
   };
@@ -281,6 +292,8 @@ const AddNewWork = () => {
 
         </Form>
       </Card>
+
+      <AddNewClient state={state} setState={setState} />
     </div>
   );
 };

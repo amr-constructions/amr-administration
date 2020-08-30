@@ -6,7 +6,7 @@ import React, { useRef } from 'react';
 const AddNewClient = ({ onSubmit, state, setState }) => {
   const formRef = useRef(null);
 
-  const { newClientFormVisible: visible } = state;
+  const { newClientFormVisible: visible, newClientName: clientName } = state;
 
   const imitateContactNumberInput = (e) => {
     const { value } = e.target;
@@ -66,6 +66,7 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
                 message: 'Client Name cannot be empty!',
               },
             ]}
+            initialValue={clientName}
           >
             <Input
               size="large"
@@ -111,6 +112,7 @@ AddNewClient.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   state: PropTypes.shape({
     newClientFormVisible: PropTypes.bool,
+    newClientName: PropTypes.string,
   }).isRequired,
   setState: PropTypes.func.isRequired,
 };
