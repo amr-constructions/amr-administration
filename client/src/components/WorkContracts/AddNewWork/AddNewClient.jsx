@@ -22,6 +22,11 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
     }
   };
 
+  const handleEnterKey = (e) => {
+    e.preventDefault();
+    formRef.current.submit();
+  };
+
   return (
     <div>
       <Modal
@@ -74,6 +79,7 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
               placeholder="Client Name"
               prefix={<UserOutlined />}
               disabled={submit}
+              onPressEnter={handleEnterKey}
             />
           </Form.Item>
 
@@ -102,6 +108,7 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
               addonBefore={<MobileOutlined />}
               onChange={imitateContactNumberInput}
               disabled={submit}
+              onPressEnter={handleEnterKey}
             />
           </Form.Item>
 
