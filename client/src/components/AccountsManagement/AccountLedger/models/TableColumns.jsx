@@ -6,6 +6,9 @@ export default () => [
     title: 'Date',
     dataIndex: 'date',
     render: (date) => <span>{dateFormatter(date)}</span>,
+    defaultSortOrder: 'ascend',
+    sortDirections: [ 'ascend', 'descend', 'ascend' ],
+    sorter: (a, b) => a.date - b.date,
   },
   {
     title: 'Description',
