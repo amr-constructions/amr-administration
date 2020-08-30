@@ -2,6 +2,7 @@ import { CheckOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
+import config from '../../../config/config';
 
 const AddNewClient = ({ onSubmit, state, setState }) => {
   const formRef = useRef(null);
@@ -97,7 +98,7 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
             <Input
               size="large"
               placeholder="Contact Number"
-              prefix="+91"
+              prefix={config.LOCALE.countryCode}
               addonBefore={<MobileOutlined />}
               onChange={imitateContactNumberInput}
               disabled={submit}
