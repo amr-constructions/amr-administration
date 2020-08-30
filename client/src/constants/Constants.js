@@ -10,6 +10,11 @@ export default {
     GET_ACCOUNT_TXNS: 'GET_ACCOUNT_TXNS',
   },
 
+  CLIENTS_MGMT: {
+    MODULE: 'CLIENTS_MGMT',
+    GET_CLIENTS: 'GET_CLIENTS',
+  },
+
   API_ERRORS: {
     LOGIN: {
       500: 'Invalid Login Details',
@@ -17,6 +22,9 @@ export default {
     ACCOUNTS_MGMT: {
       500: 'Invalid Response',
       501: 'Invalid Input Data',
+    },
+    CLIENTS_MGMT: {
+      500: 'Invalid Response',
     },
   },
 };
