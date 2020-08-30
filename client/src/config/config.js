@@ -8,5 +8,6 @@ export default {
     dateStyle: 'medium',
     currencySymbol: '₹',
     dateFormat: 'DD-MMM-YYYY',
+    countryCode: '+91',
   },
 };

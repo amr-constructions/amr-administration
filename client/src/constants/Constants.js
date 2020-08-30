@@ -10,11 +10,30 @@ export default {
     GET_ACCOUNT_TXNS: 'GET_ACCOUNT_TXNS',
   },
 
+  CLIENTS_MGMT: {
+    MODULE: 'CLIENTS_MGMT',
+    GET_CLIENTS: 'GET_CLIENTS',
+    CREATE_CLIENT: 'CREATE_CLIENT',
+  },
+
+  WORKS_MGMT: {
+    MODULE: 'WORKS_MGMT',
+    CREATE_WORK: 'CREATE_WORK',
+  },
+
   API_ERRORS: {
     LOGIN: {
       500: 'Invalid Login Details',
     },
     ACCOUNTS_MGMT: {
+      500: 'Invalid Response',
+      501: 'Invalid Input Data',
+    },
+    CLIENTS_MGMT: {
+      500: 'Invalid Response',
+      501: 'Invalid Input Data',
+    },
+    WORKS_MGMT: {
       500: 'Invalid Response',
       501: 'Invalid Input Data',
     },

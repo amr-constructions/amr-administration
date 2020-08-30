@@ -1,6 +1,7 @@
 import AccountLedger from '../AccountsManagement/AccountLedger/AccountLedger';
 import AccountsHead from '../AccountsManagement/AccountsHead/AccountsHead';
 import UnderConstruction from '../UnderConstruction/UnderConstruction';
+import AddNewWork from '../WorkContracts/AddNewWork/AddNewWork';
 
 export default [
   {
@@ -21,7 +22,7 @@ export default [
   },
   {
     key: 'work_contracts/add_new_work',
-    component: UnderConstruction,
+    component: AddNewWork,
   },
   {
     key: 'work_contracts/view_all_works',
