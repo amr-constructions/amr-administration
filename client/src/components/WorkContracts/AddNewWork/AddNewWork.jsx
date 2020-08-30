@@ -1,10 +1,12 @@
 import { CheckOutlined, CloseOutlined, HomeOutlined, HomeTwoTone, UserOutlined } from '@ant-design/icons';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
-import { Button, Card, Col, DatePicker, Form, Input, Row, Select } from 'antd';
+import { Button, Card, Col, DatePicker, Form, Input, message, Row, Select } from 'antd';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import config from '../../../config/config';
+import Constants from '../../../constants/Constants';
+import ClientServices from '../../Clients/services/entry';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import AddNewClient from './AddNewClient';
 import './AddNewWork.css';
@@ -41,6 +43,7 @@ const AddNewWork = () => {
     newClientFormVisible: false,
     newClientName: '',
     modalSubmit: false,
+    disableClientList: false,
   });
 
   const imitateNumberInput = (e) => {
@@ -127,6 +130,30 @@ const AddNewWork = () => {
       modalSubmit: true,
     }));
   };
+
+  useEffect(() => {
+    const getClientList = async function () {
+      const response = await ClientServices[Constants.CLIENTS_MGMT.GET_CLIENTS]();
+      if (response.code !== Constants.SUCCESS) {
+        setState((prevState) => ({
+          ...prevState,
+          disableClientList: true,
+        }));
+        message.error(`${response.reason} [${response.debugCode}]`);
+        return;
+      }
+
+      setState((prevState) => ({
+        ...prevState,
+        clientNames: response.data.map((item) => ({
+          label: `${item.name}    ${item.contact}`,
+          value: item.id,
+        })),
+      }));
+    };
+
+    getClientList();
+  }, []);
 
   return (
     <div>
@@ -219,6 +246,7 @@ const AddNewWork = () => {
               options={state.clientNames}
               onSearch={searchHandler}
               onSelect={selectionHandler}
+              disabled={state.disableClientList}
             />
           </Form.Item>
 
