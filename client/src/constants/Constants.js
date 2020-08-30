@@ -16,6 +16,11 @@ export default {
     CREATE_CLIENT: 'CREATE_CLIENT',
   },
 
+  WORKS_MGMT: {
+    MODULE: 'WORKS_MGMT',
+    CREATE_WORK: 'CREATE_WORK',
+  },
+
   API_ERRORS: {
     LOGIN: {
       500: 'Invalid Login Details',
@@ -25,6 +30,10 @@ export default {
       501: 'Invalid Input Data',
     },
     CLIENTS_MGMT: {
+      500: 'Invalid Response',
+      501: 'Invalid Input Data',
+    },
+    WORKS_MGMT: {
       500: 'Invalid Response',
       501: 'Invalid Input Data',
     },
