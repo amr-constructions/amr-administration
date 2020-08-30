@@ -3,7 +3,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select } from 'antd';
 import moment from 'moment';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import config from '../../../config/config';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import './AddNewWork.css';
@@ -35,6 +35,10 @@ const disabledDate = (current) => current && current < moment().endOf('day');
 const AddNewWork = () => {
   const formRef = useRef(null);
 
+  const [ state, setState ] = useState({
+    clientNames: [],
+  });
+
   const imitateNumberInput = (e) => {
     const { value } = e.target;
     if (/^-?\d*(\.\d*)?$/.test(value) || value === '' || value === '-') {
@@ -60,6 +64,32 @@ const AddNewWork = () => {
     formRef.current.setFieldsValue({
       budget: parseFloat(value).toFixed(2),
     });
+  };
+
+  const removeDynamicAddClientEntry = (clients) => {
+    if (clients.length && clients[0].value === -1) {
+      clients.shift();
+    }
+  };
+
+  const searchHandler = (searchKey) => {
+    const newClientItem = {
+      label: `Add ${searchKey} as New Client`,
+      value: -1,
+      name: searchKey,
+    };
+
+    const newArray = state.clientNames.slice(0);
+    removeDynamicAddClientEntry(newArray);
+
+    if (searchKey) {
+      newArray.unshift(newClientItem);
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      clientNames: newArray,
+    }));
   };
 
   return (
@@ -150,7 +180,8 @@ const AddNewWork = () => {
               }}
               placeholder="Select Client"
               size="large"
-              options={[]}
+              options={state.clientNames}
+              onSearch={searchHandler}
             />
           </Form.Item>
 
