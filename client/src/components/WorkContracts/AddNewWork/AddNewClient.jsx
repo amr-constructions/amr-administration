@@ -6,7 +6,7 @@ import React, { useRef } from 'react';
 const AddNewClient = ({ onSubmit, state, setState }) => {
   const formRef = useRef(null);
 
-  const { newClientFormVisible: visible, newClientName: clientName } = state;
+  const { newClientFormVisible: visible, newClientName: clientName, modalSubmit: submit } = state;
 
   const imitateContactNumberInput = (e) => {
     const { value } = e.target;
@@ -38,12 +38,12 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
           <Button
             key={0}
             type="primary"
-            loading={false}
+            loading={submit}
             onClick={() => {
               formRef.current.submit();
             }}
             icon={<CheckOutlined />}
-            disabled={false}
+            disabled={submit}
           >
             Create
           </Button>,
@@ -72,6 +72,7 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
               size="large"
               placeholder="Client Name"
               prefix={<UserOutlined />}
+              disabled={submit}
             />
           </Form.Item>
 
@@ -99,6 +100,7 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
               prefix="+91"
               addonBefore={<MobileOutlined />}
               onChange={imitateContactNumberInput}
+              disabled={submit}
             />
           </Form.Item>
 
@@ -113,6 +115,7 @@ AddNewClient.propTypes = {
   state: PropTypes.shape({
     newClientFormVisible: PropTypes.bool,
     newClientName: PropTypes.string,
+    modalSubmit: PropTypes.bool,
   }).isRequired,
   setState: PropTypes.func.isRequired,
 };

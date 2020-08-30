@@ -40,6 +40,7 @@ const AddNewWork = () => {
     clientNames: [],
     newClientFormVisible: false,
     newClientName: '',
+    modalSubmit: false,
   });
 
   const imitateNumberInput = (e) => {
@@ -117,6 +118,14 @@ const AddNewWork = () => {
         newClientFormVisible: true,
       }));
     }
+  };
+
+  const createNewClient = async (values) => {
+    console.log(values);
+    setState((prevState) => ({
+      ...prevState,
+      modalSubmit: true,
+    }));
   };
 
   return (
@@ -293,7 +302,7 @@ const AddNewWork = () => {
         </Form>
       </Card>
 
-      <AddNewClient state={state} setState={setState} />
+      <AddNewClient state={state} setState={setState} onSubmit={createNewClient} />
     </div>
   );
 };
