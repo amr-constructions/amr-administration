@@ -13,6 +13,7 @@ export default {
   CLIENTS_MGMT: {
     MODULE: 'CLIENTS_MGMT',
     GET_CLIENTS: 'GET_CLIENTS',
+    CREATE_CLIENT: 'CREATE_CLIENT',
   },
 
   API_ERRORS: {
@@ -25,6 +26,7 @@ export default {
     },
     CLIENTS_MGMT: {
       500: 'Invalid Response',
+      501: 'Invalid Input Data',
     },
   },
 };
