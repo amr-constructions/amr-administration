@@ -8,6 +8,7 @@ import config from '../../../config/config';
 import Constants from '../../../constants/Constants';
 import ClientServices from '../../Clients/services/entry';
 import NavigationPath from '../../NavigationPath/NavigationPath';
+import Services from '../services/entry';
 import AddNewClient from './AddNewClient';
 import './AddNewWork.css';
 
@@ -44,6 +45,7 @@ const AddNewWork = () => {
     newClientName: '',
     modalSubmit: false,
     disableClientList: false,
+    newWorkSubmit: false,
   });
 
   const imitateNumberInput = (e) => {
@@ -162,6 +164,33 @@ const AddNewWork = () => {
     message.success('New Client Added Successfully');
   };
 
+  const createNewWorkContract = async (values) => {
+    setState((prevState) => ({
+      ...prevState,
+      newWorkSubmit: true,
+    }));
+
+    const response = await Services[Constants.WORKS_MGMT.CREATE_WORK](values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        newWorkSubmit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      newWorkSubmit: false,
+    }));
+
+    formRef.current.resetFields();
+
+    message.success('New Work Contract Created Successfully!');
+  };
+
   useEffect(() => {
     const getClientList = async function () {
       const response = await ClientServices[Constants.CLIENTS_MGMT.GET_CLIENTS]();
@@ -195,6 +224,7 @@ const AddNewWork = () => {
           hideRequiredMark
           layout="vertical"
           ref={formRef}
+          onFinish={createNewWorkContract}
         >
 
           <Form.Item
@@ -211,6 +241,7 @@ const AddNewWork = () => {
               size="large"
               placeholder="Work Name"
               prefix={<WorkOutlineIcon />}
+              disabled={state.newWorkSubmit}
             />
           </Form.Item>
 
@@ -228,6 +259,7 @@ const AddNewWork = () => {
               size="large"
               placeholder="Location"
               prefix={<LocationOnIcon />}
+              disabled={state.newWorkSubmit}
             />
           </Form.Item>
 
@@ -248,6 +280,7 @@ const AddNewWork = () => {
               }}
               placeholder="Select Work Category"
               size="large"
+              disabled={state.newWorkSubmit}
             >
               <Option key="proj_mgmt">Project Management</Option>
               <Option key="int_dsign">Interior Designing</Option>
@@ -277,7 +310,7 @@ const AddNewWork = () => {
               options={state.clientNames}
               onSearch={searchHandler}
               onSelect={selectionHandler}
-              disabled={state.disableClientList}
+              disabled={state.disableClientList || state.newWorkSubmit}
             />
           </Form.Item>
 
@@ -303,6 +336,7 @@ const AddNewWork = () => {
                     width: '100%',
                   }}
                   placeholder={`Budget Amount (in ${config.LOCALE.currencySymbol})`}
+                  disabled={state.newWorkSubmit}
                 />
               </Form.Item>
             </Col>
@@ -324,6 +358,7 @@ const AddNewWork = () => {
                   style={{
                     width: '100%',
                   }}
+                  disabled={state.newWorkSubmit}
                 />
               </Form.Item>
             </Col>
@@ -333,7 +368,7 @@ const AddNewWork = () => {
             name="description"
             label="Work Description"
           >
-            <TextArea placeholder="Optional" allowClear />
+            <TextArea placeholder="Optional" allowClear disabled={state.newWorkSubmit} />
           </Form.Item>
 
           <Form.Item className="amr-login-submit">
@@ -342,6 +377,7 @@ const AddNewWork = () => {
               size="large"
               icon={<CheckOutlined />}
               htmlType="submit"
+              loading={state.newWorkSubmit}
             >
               Add Work Contract
             </Button>
@@ -353,6 +389,7 @@ const AddNewWork = () => {
               icon={<CloseOutlined />}
               htmlType="reset"
               onClick={() => formRef.current.resetFields()}
+              disabled={state.newWorkSubmit}
             >
               Clear All Fields
             </Button>
