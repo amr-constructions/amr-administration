@@ -3,24 +3,12 @@ import { Button, Form, Input, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import config from '../../../config/config';
+import { imitateContactNumberInput } from '../../../utils/InputUtils';
 
 const AddNewClient = ({ onSubmit, state, setState }) => {
   const formRef = useRef(null);
 
   const { newClientFormVisible: visible, newClientName: clientName, modalSubmit: submit } = state;
-
-  const imitateContactNumberInput = (e) => {
-    const { value } = e.target;
-    if (/^\d{0,9}$/.test(value)) {
-      formRef.current.setFieldsValue({
-        contact: value,
-      });
-    } else {
-      formRef.current.setFieldsValue({
-        contact: value.slice(0, -1),
-      });
-    }
-  };
 
   const handleEnterKey = (e) => {
     e.preventDefault();
@@ -106,7 +94,7 @@ const AddNewClient = ({ onSubmit, state, setState }) => {
               placeholder="Contact Number"
               prefix={config.LOCALE.countryCode}
               addonBefore={<MobileOutlined />}
-              onChange={imitateContactNumberInput}
+              onChange={(e) => imitateContactNumberInput(e, formRef, 'contact')}
               disabled={submit}
               onPressEnter={handleEnterKey}
             />

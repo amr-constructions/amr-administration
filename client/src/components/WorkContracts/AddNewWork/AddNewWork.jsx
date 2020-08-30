@@ -6,6 +6,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import config from '../../../config/config';
 import Constants from '../../../constants/Constants';
+import { formatValue, imitateNumberInput } from '../../../utils/InputUtils';
 import ClientServices from '../../Clients/services/entry';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import Services from '../services/entry';
@@ -47,33 +48,6 @@ const AddNewWork = () => {
     disableClientList: false,
     newWorkSubmit: false,
   });
-
-  const imitateNumberInput = (e) => {
-    const { value } = e.target;
-    if (/^-?\d*(\.\d*)?$/.test(value) || value === '' || value === '-') {
-      formRef.current.setFieldsValue({
-        budget: value,
-      });
-    } else {
-      formRef.current.setFieldsValue({
-        budget: value.slice(0, -1),
-      });
-    }
-  };
-
-  const formatValue = (e) => {
-    let { value } = e.target;
-
-    if (!value || value === '-' || value === '.') {
-      value = 0;
-    } else if (value.charAt(value.length - 1) === '.') {
-      value = value.slice(0, -1);
-    }
-
-    formRef.current.setFieldsValue({
-      budget: parseFloat(value).toFixed(2),
-    });
-  };
 
   const removeDynamicAddClientEntry = (clients) => {
     if (clients.length && clients[0].value === -1) {
@@ -326,8 +300,8 @@ const AddNewWork = () => {
                   },
                 ]}
                 initialValue="0.00"
-                onChange={imitateNumberInput}
-                onBlur={formatValue}
+                onChange={(e) => imitateNumberInput(e, formRef, 'budget')}
+                onBlur={(e) => formatValue(e, formRef, 'budget')}
               >
                 <Input
                   prefix={config.LOCALE.currencySymbol}
