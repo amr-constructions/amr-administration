@@ -124,11 +124,42 @@ const AddNewWork = () => {
   };
 
   const createNewClient = async (values) => {
-    console.log(values);
     setState((prevState) => ({
       ...prevState,
       modalSubmit: true,
     }));
+
+    const response = await ClientServices[Constants.CLIENTS_MGMT.CREATE_CLIENT](values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        modalSubmit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    const { data } = response;
+
+    const newData = state.clientNames.slice(0);
+    newData.push({
+      label: `${data.name}    ${data.contact}`,
+      value: data.id,
+    });
+
+    setState((prevState) => ({
+      ...prevState,
+      modalSubmit: false,
+      newClientFormVisible: false,
+      clientNames: newData,
+    }));
+
+    formRef.current.setFieldsValue({
+      client: data.id,
+    });
+
+    message.success('New Client Added Successfully');
   };
 
   useEffect(() => {
