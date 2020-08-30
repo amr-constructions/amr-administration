@@ -92,6 +92,22 @@ const AddNewWork = () => {
     }));
   };
 
+  const selectionHandler = (value, option) => {
+    if (value === -1) {
+      formRef.current.setFieldsValue({
+        client: null,
+      });
+
+      const newArray = state.clientNames.slice(0);
+      removeDynamicAddClientEntry(newArray);
+
+      setState((prevState) => ({
+        ...prevState,
+        clientNames: newArray,
+      }));
+    }
+  };
+
   return (
     <div>
       <NavigationPath path={navigationPath} />
@@ -182,6 +198,7 @@ const AddNewWork = () => {
               size="large"
               options={state.clientNames}
               onSearch={searchHandler}
+              onSelect={selectionHandler}
             />
           </Form.Item>
 
