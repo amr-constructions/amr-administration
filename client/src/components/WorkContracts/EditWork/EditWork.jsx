@@ -397,7 +397,7 @@ const EditWork = ({ match }) => {
               size="large"
               icon={<CloseOutlined />}
               htmlType="reset"
-              onClick={() => formRef.current.resetFields()}
+              onClick={() => formRef.current.setFieldsValue(state.dataForEdit)}
               disabled={state.updateWorkSubmit}
             >
               Reset All Fields
