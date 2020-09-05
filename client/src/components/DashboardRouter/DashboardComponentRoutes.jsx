@@ -2,6 +2,7 @@ import AccountLedger from '../AccountsManagement/AccountLedger/AccountLedger';
 import AccountsHead from '../AccountsManagement/AccountsHead/AccountsHead';
 import UnderConstruction from '../UnderConstruction/UnderConstruction';
 import AddNewWork from '../WorkContracts/AddNewWork/AddNewWork';
+import EditWork from '../WorkContracts/EditWork/EditWork';
 import ViewwAllWorks from '../WorkContracts/ViewAllWorks/ViewAllWorks';
 
 export default [
@@ -28,6 +29,10 @@ export default [
   {
     key: 'work_contracts/view_all_works',
     component: ViewwAllWorks,
+  },
+  {
+    key: 'work_contracts/edit_work/:id',
+    component: EditWork,
   },
   {
     key: 'client_payment_receipts',
