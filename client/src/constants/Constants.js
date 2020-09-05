@@ -20,6 +20,7 @@ export default {
     MODULE: 'WORKS_MGMT',
     CREATE_WORK: 'CREATE_WORK',
     GET_WORKS: 'GET_WORKS',
+    GET_WORK: 'GET_WORK',
   },
 
   WORK_STATUS: {
