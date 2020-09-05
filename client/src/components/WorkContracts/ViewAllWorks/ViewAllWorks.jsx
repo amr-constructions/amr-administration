@@ -7,6 +7,7 @@ import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
 import Columns from './models/TableColumns';
+import './ViewAllWorks.css';
 
 const navigationPath = [
   {

@@ -1,8 +1,24 @@
-import { DeleteFilled, EditOutlined } from '@ant-design/icons';
-import { Button, Space, Tooltip } from 'antd';
+import { CheckCircleOutlined, CloseCircleOutlined, DeleteFilled, EditOutlined, ExclamationCircleOutlined, SyncOutlined, WarningFilled } from '@ant-design/icons';
+import { Button, Space, Tag, Tooltip } from 'antd';
 import React from 'react';
+import Constants from '../../../../constants/Constants';
 import { currencyFormatter, dateFormatter } from '../../../../utils/LocaleUtils';
 import { workCategories, workStatus } from '../../common/model';
+
+const getWorkStatusTag = (status) => {
+  switch (status) {
+    case Constants.WORK_STATUS.WIP:
+      return (<Tag icon={<SyncOutlined />} color="processing" className="amr-work-status">{workStatus[status]}</Tag>);
+    case Constants.WORK_STATUS.COMPLETED:
+      return (<Tag icon={<CheckCircleOutlined />} color="success" className="amr-work-status">{workStatus[status]}</Tag>);
+    case Constants.WORK_STATUS.OVERDUE:
+      return (<Tag icon={<ExclamationCircleOutlined />} color="warning" className="amr-work-status">{workStatus[status]}</Tag>);
+    case Constants.WORK_STATUS.DELETED:
+      return (<Tag size="large" icon={<CloseCircleOutlined />} color="error" className="amr-work-status">{workStatus[status]}</Tag>);
+    default:
+      return (<Tag size="large" icon={<WarningFilled />} color="error" className="amr-work-status">Error</Tag>);
+  }
+};
 
 export default () => [
   {
@@ -45,7 +61,7 @@ export default () => [
   {
     title: 'Status',
     dataIndex: 'status',
-    render: (status) => (<span>{workStatus[status]}</span>),
+    render: getWorkStatusTag,
   },
   {
     title: 'Created By',
