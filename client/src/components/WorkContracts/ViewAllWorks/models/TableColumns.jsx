@@ -20,6 +20,8 @@ const getWorkStatusTag = (status) => {
   }
 };
 
+const getWorkCategories = (categories) => categories.map((item) => workCategories[item]).join(', ');
+
 export default () => [
   {
     title: '#',
@@ -49,7 +51,7 @@ export default () => [
   {
     title: 'Category',
     dataIndex: 'category',
-    render: (category) => (<span>{workCategories[category]}</span>),
+    render: getWorkCategories,
   },
   {
     title: 'Budget',
