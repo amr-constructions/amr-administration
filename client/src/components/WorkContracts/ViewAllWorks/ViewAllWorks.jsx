@@ -1,9 +1,11 @@
 import { HomeOutlined, LoadingOutlined, ProfileTwoTone, UserOutlined } from '@ant-design/icons';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
-import { Table } from 'antd';
+import { message, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
+import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import TableTitle from '../../TableTitle/TableTitle';
+import Services from '../services/entry';
 import Columns from './models/TableColumns';
 
 const navigationPath = [
@@ -33,9 +35,21 @@ const ViewAllWorks = () => {
 
   useEffect(() => {
     const getAllWorksList = async function () {
+      const response = await Services[Constants.WORKS_MGMT.GET_WORKS]();
+      if (response.code !== Constants.SUCCESS) {
+        setState((prevState) => ({
+          ...prevState,
+          data: [],
+          tableLoading: false,
+        }));
+
+        message.error(`${response.reason} [${response.debugCode}]`);
+        return;
+      }
+
       setState((prevState) => ({
         ...prevState,
-        data: [],
+        data: response.data,
         tableLoading: false,
       }));
     };
