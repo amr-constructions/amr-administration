@@ -2,7 +2,7 @@ import { DeleteFilled, EditOutlined } from '@ant-design/icons';
 import { Button, Space, Tooltip } from 'antd';
 import React from 'react';
 import { currencyFormatter, dateFormatter } from '../../../../utils/LocaleUtils';
-import WorkCategories from '../../common/model';
+import { workCategories, workStatus } from '../../common/model';
 
 export default () => [
   {
@@ -33,7 +33,7 @@ export default () => [
   {
     title: 'Category',
     dataIndex: 'category',
-    render: (category) => <span>{WorkCategories[category]}</span>,
+    render: (category) => (<span>{workCategories[category]}</span>),
   },
   {
     title: 'Budget',
@@ -45,6 +45,7 @@ export default () => [
   {
     title: 'Status',
     dataIndex: 'status',
+    render: (status) => (<span>{workStatus[status]}</span>),
   },
   {
     title: 'Created By',

@@ -22,6 +22,13 @@ export default {
     GET_WORKS: 'GET_WORKS',
   },
 
+  WORK_STATUS: {
+    WIP: 0,
+    COMPLETED: 1,
+    OVERDUE: 2,
+    DELETED: 3,
+  },
+
   API_ERRORS: {
     LOGIN: {
       500: 'Invalid Login Details',

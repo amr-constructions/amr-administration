@@ -9,7 +9,7 @@ import Constants from '../../../constants/Constants';
 import { formatValue, imitateNumberInput } from '../../../utils/InputUtils';
 import ClientServices from '../../Clients/services/entry';
 import NavigationPath from '../../NavigationPath/NavigationPath';
-import WorkCategories from '../common/model';
+import { workCategories } from '../common/model';
 import Services from '../services/entry';
 import AddNewClient from './AddNewClient';
 import './AddNewWork.css';
@@ -258,7 +258,7 @@ const AddNewWork = () => {
               disabled={state.newWorkSubmit}
             >
               {
-                Object.keys(WorkCategories).map((item) => (<Option key={item}>{WorkCategories[item]}</Option>))
+                Object.keys(workCategories).map((item) => (<Option key={item}>{workCategories[item]}</Option>))
               }
             </Select>
           </Form.Item>
