@@ -19,6 +19,7 @@ export default {
   WORKS_MGMT: {
     MODULE: 'WORKS_MGMT',
     CREATE_WORK: 'CREATE_WORK',
+    GET_WORKS: 'GET_WORKS',
   },
 
   API_ERRORS: {
