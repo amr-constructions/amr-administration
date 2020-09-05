@@ -3,6 +3,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import { Button, Card, Col, DatePicker, Form, Input, message, Row, Select } from 'antd';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import config from '../../../config/config';
 import Constants from '../../../constants/Constants';
@@ -11,6 +12,7 @@ import ClientServices from '../../Clients/services/entry';
 import NavigationPath from '../../NavigationPath/NavigationPath';
 import AddNewClient from '../AddNewWork/AddNewClient';
 import { workCategories } from '../common/model';
+import Services from '../services/entry';
 import './EditWork.css';
 
 const { Option } = Select;
@@ -37,7 +39,19 @@ const navigationPath = [
 
 const disabledDate = (current) => current && current < moment().endOf('day');
 
-const EditWork = () => {
+/* Map the response to corresponding form names */
+const getFormUnderstandableResponse = (responseData) => ({
+  workName: responseData.name,
+  location: responseData.location,
+  category: responseData.category,
+  supervisor: responseData.supervisor,
+  client: responseData.client_id,
+  budget: parseFloat(responseData.budget).toFixed(2),
+  completeOn: moment(responseData.completeOn),
+  description: responseData.description,
+});
+
+const EditWork = ({ match }) => {
   const formRef = useRef(null);
 
   const [ state, setState ] = useState({
@@ -47,6 +61,8 @@ const EditWork = () => {
     modalSubmit: false,
     disableClientList: false,
     updateWorkSubmit: false,
+    dataForEdit: {
+    },
   });
 
   const removeDynamicAddClientEntry = (clients) => {
@@ -162,8 +178,24 @@ const EditWork = () => {
       }));
     };
 
+    const getWorkDetails = async function () {
+      const response = await Services[Constants.WORKS_MGMT.GET_WORK](match.params.id);
+      if (response.code !== Constants.SUCCESS) {
+        message.error(`${response.reason} [${response.debugCode}]`);
+        return;
+      }
+
+      const formData = getFormUnderstandableResponse(response.data);
+      formRef.current.setFieldsValue(formData);
+      setState((prevState) => ({
+        ...prevState,
+        dataForEdit: formData,
+      }));
+    };
+
     getClientList();
-  }, []);
+    getWorkDetails();
+  }, [ match.params.id ]);
 
   return (
     <div>
@@ -378,6 +410,14 @@ const EditWork = () => {
       <AddNewClient state={state} setState={setState} onSubmit={createNewClient} />
     </div>
   );
+};
+
+EditWork.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.exact({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default EditWork;
