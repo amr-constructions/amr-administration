@@ -65,12 +65,17 @@ const ViewAllWorks = ({ history }) => {
     history.push('add_new_work');
   };
 
+  const editWork = (id) => {
+    history.push(`edit_work/${id}`);
+  };
+
   return (
     <div>
       <NavigationPath path={navigationPath} />
       <Table
         columns={Columns({
           handlers: {
+            editWork,
           },
         })}
         dataSource={state.data}

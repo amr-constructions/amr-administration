@@ -22,7 +22,7 @@ const getWorkStatusTag = (status) => {
 
 const getWorkCategories = (categories) => categories.map((item) => workCategories[item]).join(', ');
 
-export default () => [
+export default ({ handlers }) => [
   {
     title: '#',
     dataIndex: 'id',
@@ -79,10 +79,18 @@ export default () => [
     dataIndex: 'actions',
     fixed: 'right',
     align: 'center',
-    render: () => (
+    render: (text, record) => (
       <Space size="large" align="end">
         <Tooltip title="Edit Work Details">
-          <Button type="primary" size="medium" shape="circle" onClick={() => {}} icon={<EditOutlined />} />
+          <Button
+            type="primary"
+            size="medium"
+            shape="circle"
+            onClick={() => {
+              handlers.editWork(record.id);
+            }}
+            icon={<EditOutlined />}
+          />
         </Tooltip>
         <Tooltip title="Delete Work">
           <Button type="danger" size="medium" shape="circle" onClick={() => {}} icon={<DeleteFilled />} />
