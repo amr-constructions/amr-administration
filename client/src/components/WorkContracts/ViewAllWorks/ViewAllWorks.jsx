@@ -1,6 +1,7 @@
 import { HomeOutlined, LoadingOutlined, ProfileTwoTone, UserOutlined } from '@ant-design/icons';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import { message, Table } from 'antd';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import NavigationPath from '../../NavigationPath/NavigationPath';
@@ -28,7 +29,7 @@ const navigationPath = [
   },
 ];
 
-const ViewAllWorks = () => {
+const ViewAllWorks = ({ history }) => {
   const [ state, setState ] = useState({
     data: [],
     tableLoading: true,
@@ -60,6 +61,10 @@ const ViewAllWorks = () => {
     /* Empty array means, this hook is run only once when the component is mounted */
   }, []);
 
+  const newWork = () => {
+    history.push('add_new_work');
+  };
+
   return (
     <div>
       <NavigationPath path={navigationPath} />
@@ -77,7 +82,7 @@ const ViewAllWorks = () => {
               icon: PlaylistAddOutlinedIcon,
               type: 'primary',
               label: 'New Work',
-              onClick: () => {},
+              onClick: () => newWork(),
             }}
           />
         )}
@@ -94,6 +99,12 @@ const ViewAllWorks = () => {
       />
     </div>
   );
+};
+
+ViewAllWorks.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default ViewAllWorks;
