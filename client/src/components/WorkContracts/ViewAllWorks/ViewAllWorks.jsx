@@ -1,6 +1,6 @@
-import { HomeOutlined, LoadingOutlined, ProfileTwoTone, UserOutlined } from '@ant-design/icons';
+import { CloseOutlined, DeleteOutlined, HomeOutlined, LoadingOutlined, ProfileTwoTone, UserOutlined } from '@ant-design/icons';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
-import { message, Table } from 'antd';
+import { message, Modal, Table } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Constants from '../../../constants/Constants';
@@ -9,6 +9,8 @@ import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
 import Columns from './models/TableColumns';
 import './ViewAllWorks.css';
+
+const { confirm } = Modal;
 
 const navigationPath = [
   {
@@ -70,6 +72,25 @@ const ViewAllWorks = ({ history }) => {
   };
 
   const deleteWork = (id) => {
+    confirm({
+      title: 'Do you want to delete this work ?',
+      icon: <DeleteOutlined />,
+      content: 'This action cannot be reversed',
+      okText: 'Yes, Delete',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+      },
+      onCancel() {},
+      cancelButtonProps: {
+        icon: <CloseOutlined />,
+      },
+      okButtonProps: {
+        icon: <DeleteOutlined />,
+      },
+      autoFocusButton: 'cancel',
+      centered: true,
+    });
   };
 
   return (
