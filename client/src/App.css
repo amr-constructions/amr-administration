@@ -27,3 +27,8 @@
   background: #555;
 }
 /* Custom Scroll Bar [END] */
+
+.MuiSvgIcon-root {
+  float: left;
+  clear: both;
+}

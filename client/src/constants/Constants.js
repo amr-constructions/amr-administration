@@ -19,6 +19,14 @@ export default {
   WORKS_MGMT: {
     MODULE: 'WORKS_MGMT',
     CREATE_WORK: 'CREATE_WORK',
+    GET_WORKS: 'GET_WORKS',
+  },
+
+  WORK_STATUS: {
+    WIP: 0,
+    COMPLETED: 1,
+    OVERDUE: 2,
+    DELETED: 3,
   },
 
   API_ERRORS: {
