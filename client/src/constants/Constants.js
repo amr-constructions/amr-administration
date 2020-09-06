@@ -22,6 +22,7 @@ export default {
     GET_WORKS: 'GET_WORKS',
     GET_WORK: 'GET_WORK',
     UPDATE_WORK: 'UPDATE_WORK',
+    DELETE_WORK: 'DELETE_WORK',
   },
 
   WORK_STATUS: {
