@@ -24,8 +24,10 @@ export default async (id) => {
 
   if (sampleData == null || id == null) {
     buildResponseObject(response, Constants.WORKS_MGMT.MODULE, 501);
-  } else {
+  } else if (id === '1') {
     response.data = sampleData;
+  } else {
+    buildResponseObject(response, Constants.WORKS_MGMT.MODULE, 502);
   }
 
   return response;

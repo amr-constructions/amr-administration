@@ -46,6 +46,7 @@ export default {
     WORKS_MGMT: {
       500: 'Invalid Response',
       501: 'Invalid Input Data',
+      502: 'Work Not Found',
     },
   },
 };
