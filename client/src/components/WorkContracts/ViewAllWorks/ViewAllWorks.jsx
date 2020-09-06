@@ -71,6 +71,38 @@ const ViewAllWorks = ({ history }) => {
     history.push(`edit_work/${id}`);
   };
 
+  const postDeleteWork = (response) => {
+    setState((prevState) => ({
+      ...prevState,
+      tableLoading: true,
+    }));
+
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+      }));
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      data: prevState.data.map((item) => {
+        if (item.id === response.data.id) {
+          return {
+            ...item,
+            status: Constants.WORK_STATUS.DELETED,
+          };
+        }
+        return item;
+      }),
+      tableLoading: false,
+    }));
+
+    message.success('Work Deleted Successfully !');
+  };
+
   const deleteWork = (id) => {
     confirm({
       title: 'Do you want to delete this work ?',
@@ -80,6 +112,12 @@ const ViewAllWorks = ({ history }) => {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
+        return new Promise((resolve) => {
+          Services[Constants.WORKS_MGMT.DELETE_WORK](id)
+            .then((response) => {
+              resolve(postDeleteWork(response));
+            });
+        });
       },
       onCancel() {},
       cancelButtonProps: {
