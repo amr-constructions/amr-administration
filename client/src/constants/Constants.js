@@ -20,6 +20,8 @@ export default {
     MODULE: 'WORKS_MGMT',
     CREATE_WORK: 'CREATE_WORK',
     GET_WORKS: 'GET_WORKS',
+    GET_WORK: 'GET_WORK',
+    UPDATE_WORK: 'UPDATE_WORK',
   },
 
   WORK_STATUS: {
@@ -44,6 +46,7 @@ export default {
     WORKS_MGMT: {
       500: 'Invalid Response',
       501: 'Invalid Input Data',
+      502: 'Work Not Found',
     },
   },
 };
