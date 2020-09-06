@@ -69,6 +69,9 @@ const ViewAllWorks = ({ history }) => {
     history.push(`edit_work/${id}`);
   };
 
+  const deleteWork = (id) => {
+  };
+
   return (
     <div>
       <NavigationPath path={navigationPath} />
@@ -76,6 +79,7 @@ const ViewAllWorks = ({ history }) => {
         columns={Columns({
           handlers: {
             editWork,
+            deleteWork,
           },
         })}
         dataSource={state.data}

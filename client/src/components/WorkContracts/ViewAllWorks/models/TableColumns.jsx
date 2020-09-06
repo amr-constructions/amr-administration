@@ -93,7 +93,15 @@ export default ({ handlers }) => [
           />
         </Tooltip>
         <Tooltip title="Delete Work">
-          <Button type="danger" size="medium" shape="circle" onClick={() => {}} icon={<DeleteFilled />} />
+          <Button
+            type="danger"
+            size="medium"
+            shape="circle"
+            onClick={() => {
+              handlers.deleteWork(record.id);
+            }}
+            icon={<DeleteFilled />}
+          />
         </Tooltip>
       </Space>
     ),
