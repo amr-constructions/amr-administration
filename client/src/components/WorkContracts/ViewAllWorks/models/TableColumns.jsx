@@ -84,6 +84,9 @@ export default ({ handlers }) => [
     ],
     onFilter: (value, record) => record.status === value,
     defaultFilteredValue: [ Constants.WORK_STATUS.WIP, Constants.WORK_STATUS.COMPLETED, Constants.WORK_STATUS.OVERDUE ],
+    defaultSortOrder: 'ascend',
+    sortDirections: [ 'ascend', 'descend', 'ascend' ],
+    sorter: (a, b) => a.status - b.status,
   },
   {
     title: 'Created By',
