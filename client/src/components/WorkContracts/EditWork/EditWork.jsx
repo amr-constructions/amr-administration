@@ -1,7 +1,7 @@
 import { CloseOutlined, EditOutlined, EditTwoTone, HomeOutlined, UserOutlined } from '@ant-design/icons';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
-import { Button, Card, Col, DatePicker, Form, Input, message, Row, Select } from 'antd';
+import { Button, Card, Col, DatePicker, Form, Input, message, Result, Row, Select } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
@@ -65,6 +65,7 @@ const EditWork = ({ match, history }) => {
     dataForEdit: {
     },
     loading: true,
+    notFound: false,
   });
 
   const removeDynamicAddClientEntry = (clients) => {
@@ -202,6 +203,11 @@ const EditWork = ({ match, history }) => {
       const response = await Services[Constants.WORKS_MGMT.GET_WORK](match.params.id);
       if (response.code !== Constants.SUCCESS) {
         message.error(`${response.reason} [${response.debugCode}]`);
+        setState((prevState) => ({
+          ...prevState,
+          loading: false,
+          notFound: true,
+        }));
         return;
       }
 
@@ -219,7 +225,7 @@ const EditWork = ({ match, history }) => {
     getWorkDetails();
   }, [ match.params.id ]);
 
-  return (
+  return (!state.notFound) ? (
     <div>
       <NavigationPath path={navigationPath} />
       <Card loading={state.loading}>
@@ -431,6 +437,13 @@ const EditWork = ({ match, history }) => {
 
       <AddNewClient state={state} setState={setState} onSubmit={createNewClient} />
     </div>
+  ) : (
+    <Result
+      status="404"
+      title="404"
+      subTitle="The work item you are trying to access is not found"
+      extra={<Button type="primary" onClick={() => history.push('/dashboard/work_contracts/view_all_works')}>View All Works</Button>}
+    />
   );
 };
 
