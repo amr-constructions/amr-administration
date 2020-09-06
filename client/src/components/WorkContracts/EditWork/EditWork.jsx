@@ -51,7 +51,7 @@ const getFormUnderstandableResponse = (responseData) => ({
   description: responseData.description,
 });
 
-const EditWork = ({ match }) => {
+const EditWork = ({ match, history }) => {
   const formRef = useRef(null);
 
   const [ state, setState ] = useState({
@@ -61,6 +61,7 @@ const EditWork = ({ match }) => {
     modalSubmit: false,
     disableClientList: false,
     updateWorkSubmit: false,
+    id: null,
     dataForEdit: {
     },
     loading: true,
@@ -155,7 +156,25 @@ const EditWork = ({ match }) => {
     message.success('New Client Added Successfully');
   };
 
-  const updateWorkContract = async () => {
+  const updateWorkContract = async (values) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateWorkSubmit: true,
+    }));
+
+    const response = await Services[Constants.WORKS_MGMT.UPDATE_WORK](state.id, values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        updateWorkSubmit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    history.push('/dashboard/work_contracts/view_all_works');
+    message.success('Work Contract Updated Successfully!');
   };
 
   useEffect(() => {
@@ -190,6 +209,7 @@ const EditWork = ({ match }) => {
       setState((prevState) => ({
         ...prevState,
         loading: false,
+        id: response.data.id,
         dataForEdit: formData,
       }));
       formRef.current.setFieldsValue(formData);
@@ -419,6 +439,9 @@ EditWork.propTypes = {
     params: PropTypes.exact({
       id: PropTypes.string,
     }),
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
 
