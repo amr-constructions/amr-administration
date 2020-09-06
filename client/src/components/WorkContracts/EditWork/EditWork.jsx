@@ -63,6 +63,7 @@ const EditWork = ({ match }) => {
     updateWorkSubmit: false,
     dataForEdit: {
     },
+    loading: true,
   });
 
   const removeDynamicAddClientEntry = (clients) => {
@@ -186,11 +187,12 @@ const EditWork = ({ match }) => {
       }
 
       const formData = getFormUnderstandableResponse(response.data);
-      formRef.current.setFieldsValue(formData);
       setState((prevState) => ({
         ...prevState,
+        loading: false,
         dataForEdit: formData,
       }));
+      formRef.current.setFieldsValue(formData);
     };
 
     getClientList();
@@ -200,7 +202,7 @@ const EditWork = ({ match }) => {
   return (
     <div>
       <NavigationPath path={navigationPath} />
-      <Card>
+      <Card loading={state.loading}>
         <Form
           name="amr-new-work-form"
           hideRequiredMark
