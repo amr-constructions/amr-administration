@@ -21,6 +21,7 @@ export default {
     CREATE_WORK: 'CREATE_WORK',
     GET_WORKS: 'GET_WORKS',
     GET_WORK: 'GET_WORK',
+    UPDATE_WORK: 'UPDATE_WORK',
   },
 
   WORK_STATUS: {
