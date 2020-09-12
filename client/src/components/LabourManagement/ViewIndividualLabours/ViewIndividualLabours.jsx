@@ -1,14 +1,44 @@
 import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
-import React, { useState } from 'react';
+import { message, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
+import Services from '../services/entry';
 import Columns from './models/TableColumns';
 
 const ViewIndividualLabours = () => {
   const [ state, setState ] = useState({
     data: [],
-    tableLoading: false,
+    tableLoading: true,
   });
+
+  useEffect(() => {
+    const getIndividualLaboursList = async function () {
+      const response = await Services[Constants.LABOURS_MGMT.GET_LABOURS]();
+      if (response.code !== Constants.SUCCESS) {
+        setState((prevState) => ({
+          ...prevState,
+          data: [],
+          tableLoading: false,
+        }));
+
+        message.error(`${response.reason} [${response.debugCode}]`);
+        return;
+      }
+
+      const { data } = response;
+
+      setState((prevState) => ({
+        ...prevState,
+        data,
+        tableLoading: false,
+      }));
+    };
+
+    getIndividualLaboursList();
+
+    /* Empty array means, this hook is run only once when the component is mounted */
+  }, []);
 
   const addNewIndividualLabour = () => {
 
