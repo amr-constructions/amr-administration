@@ -1,4 +1,7 @@
 import { OrderedListOutlined } from '@ant-design/icons';
+import AccountBalanceWalletSharpIcon from '@material-ui/icons/AccountBalanceWalletSharp';
+import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
+import PeopleSharpIcon from '@material-ui/icons/PeopleSharp';
 
 export default [
   {
@@ -152,19 +155,19 @@ export default [
   {
     id: 12,
     title: 'Labour Management',
-    icon: OrderedListOutlined,
+    icon: GroupOutlinedIcon,
     parent: true,
     children: [
       {
         id: 12.1,
         title: 'Labours',
-        icon: OrderedListOutlined,
+        icon: PeopleSharpIcon,
         parent: false,
       },
       {
         id: 12.2,
         title: 'Wage Slips & Paymets',
-        icon: OrderedListOutlined,
+        icon: AccountBalanceWalletSharpIcon,
         parent: false,
       },
     ],
