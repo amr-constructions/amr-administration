@@ -80,22 +80,36 @@ export default ({ handlers }) => [
     fixed: 'right',
     align: 'center',
     render: (text, record) => (
-      <Space size="large" align="end">
-        <Tooltip title="Edit Work Details">
-          <Button
-            type="primary"
-            size="medium"
-            shape="circle"
-            onClick={() => {
-              handlers.editWork(record.id);
-            }}
-            icon={<EditOutlined />}
-          />
-        </Tooltip>
-        <Tooltip title="Delete Work">
-          <Button type="danger" size="medium" shape="circle" onClick={() => {}} icon={<DeleteFilled />} />
-        </Tooltip>
-      </Space>
+      (record.status === Constants.WORK_STATUS.DELETED) ? (
+        <Button type="dashed" disabled>
+          - NA -
+        </Button>
+      ) : (
+        <Space size="large" align="end">
+          <Tooltip title="Edit Work Details">
+            <Button
+              type="primary"
+              size="medium"
+              shape="circle"
+              onClick={() => {
+                handlers.editWork(record.id);
+              }}
+              icon={<EditOutlined />}
+            />
+          </Tooltip>
+          <Tooltip title="Delete Work">
+            <Button
+              type="danger"
+              size="medium"
+              shape="circle"
+              onClick={() => {
+                handlers.deleteWork(record.id);
+              }}
+              icon={<DeleteFilled />}
+            />
+          </Tooltip>
+        </Space>
+      )
     ),
   },
 ];
