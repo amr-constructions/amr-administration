@@ -64,6 +64,29 @@ export default ({ handlers }) => [
     title: 'Status',
     dataIndex: 'status',
     render: getWorkStatusTag,
+    filters: [
+      {
+        text: workStatus[Constants.WORK_STATUS.WIP],
+        value: Constants.WORK_STATUS.WIP,
+      },
+      {
+        text: workStatus[Constants.WORK_STATUS.COMPLETED],
+        value: Constants.WORK_STATUS.COMPLETED,
+      },
+      {
+        text: workStatus[Constants.WORK_STATUS.OVERDUE],
+        value: Constants.WORK_STATUS.OVERDUE,
+      },
+      {
+        text: workStatus[Constants.WORK_STATUS.DELETED],
+        value: Constants.WORK_STATUS.DELETED,
+      },
+    ],
+    onFilter: (value, record) => record.status === value,
+    defaultFilteredValue: [ Constants.WORK_STATUS.WIP, Constants.WORK_STATUS.COMPLETED, Constants.WORK_STATUS.OVERDUE ],
+    defaultSortOrder: 'ascend',
+    sortDirections: [ 'ascend', 'descend', 'ascend' ],
+    sorter: (a, b) => a.status - b.status,
   },
   {
     title: 'Created By',

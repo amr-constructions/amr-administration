@@ -88,7 +88,15 @@ const ViewAllWorks = ({ history }) => {
 
     setState((prevState) => ({
       ...prevState,
-      data: prevState.data.filter((item) => item.id !== response.data.id),
+      data: prevState.data.map((item) => {
+        if (item.id === response.data.id) {
+          return {
+            ...item,
+            status: Constants.WORK_STATUS.DELETED,
+          };
+        }
+        return item;
+      }),
       tableLoading: false,
     }));
 
