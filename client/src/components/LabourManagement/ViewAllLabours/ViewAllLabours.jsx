@@ -1,6 +1,7 @@
 import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import React from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
+import ViewIndividualLabours from '../ViewIndividualLabours/ViewIndividualLabours';
 
 const navigationPath = [
   {
@@ -24,6 +25,7 @@ const navigationPath = [
 const ViewAllLabours = () => (
   <div>
     <NavigationPath path={navigationPath} />
+    <ViewIndividualLabours />
   </div>
 );
 
