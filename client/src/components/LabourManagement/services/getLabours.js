@@ -86,6 +86,35 @@ const sampleDataGroup = [
   },
 ];
 
+const prepareTreeStructure = (flatStructure) => {
+  /* Make Leader-Member Relation from flat Structure */
+  const leaders = [];
+  const members = new Map();
+
+  flatStructure.forEach((labour) => {
+    if (labour.leader === 'Y') {
+      leaders.push({
+        ...labour, children: [],
+      });
+    } else {
+      const { group_id: groupId } = labour;
+      if (!members.has(groupId)) {
+        members.set(groupId, [ labour ]);
+      } else {
+        members.set(groupId, members.get(groupId).concat(labour));
+      }
+    }
+  });
+
+  leaders.forEach((leader) => {
+    if (members.has(leader.group_id)) {
+      leader.children.push(...members.get(leader.group_id));
+    }
+  });
+
+  return leaders;
+};
+
 export default async (labourType) => {
   const response = initResponseObject();
 
@@ -100,7 +129,7 @@ export default async (labourType) => {
     }
 
     if (labourType & Constants.LABOURS_MGMT.LABOUR_TYPES.GROUP_LABOUR) {
-      response.data.push(...sampleDataGroup);
+      response.data.push(...prepareTreeStructure(sampleDataGroup));
     }
   }
 
