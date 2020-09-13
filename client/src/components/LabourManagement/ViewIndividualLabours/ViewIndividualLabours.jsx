@@ -4,6 +4,7 @@ import { message, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
+import WorkServices from '../../WorkContracts/services/entry';
 import Services from '../services/entry';
 import Columns from './models/TableColumns';
 import NewIndividualLabour from './NewIndividualLabour';
@@ -14,6 +15,8 @@ const ViewIndividualLabours = () => {
     tableLoading: true,
     visible: false,
     modalSubmit: false,
+    disableNewIndividualLabour: false,
+    workTypes: [],
   });
 
   useEffect(() => {
@@ -39,7 +42,26 @@ const ViewIndividualLabours = () => {
       }));
     };
 
+    const getWorkTypeList = async function () {
+      const response = await WorkServices[Constants.WORKS_MGMT.GET_WORK_TYPES]();
+      if (response.code !== Constants.SUCCESS) {
+        setState((prevState) => ({
+          ...prevState,
+          disableNewIndividualLabour: true,
+        }));
+        message.error(`${response.reason} [${response.debugCode}]`);
+      }
+
+      const { data } = response;
+
+      setState((prevState) => ({
+        ...prevState,
+        workTypes: data,
+      }));
+    };
+
     getIndividualLaboursList();
+    getWorkTypeList();
 
     /* Empty array means, this hook is run only once when the component is mounted */
   }, []);
@@ -70,6 +92,7 @@ const ViewIndividualLabours = () => {
               type: 'primary',
               label: 'New Individual Labour',
               onClick: addNewIndividualLabour,
+              disabled: state.disableNewIndividualLabour,
             }}
           />
         )}
