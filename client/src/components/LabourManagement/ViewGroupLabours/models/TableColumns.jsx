@@ -53,27 +53,33 @@ export default () => [
     dataIndex: 'actions',
     fixed: 'right',
     align: 'center',
-    render: () => (
-      <Space size="large" align="end">
-        <Tooltip title="Edit Labour Group">
-          <Button
-            type="primary"
-            size="medium"
-            shape="circle"
-            onClick={() => {}}
-            icon={<EditOutlined />}
-          />
-        </Tooltip>
-        <Tooltip title="Delete Labour Group">
-          <Button
-            type="danger"
-            size="medium"
-            shape="circle"
-            onClick={() => {}}
-            icon={<DeleteFilled />}
-          />
-        </Tooltip>
-      </Space>
+    render: (text, record) => (
+      (!record.leader || record.leader !== 'Y') ? (
+        <Button type="dashed" disabled>
+          - NA -
+        </Button>
+      ) : (
+        <Space size="large" align="end">
+          <Tooltip title="Edit Labour Group">
+            <Button
+              type="primary"
+              size="medium"
+              shape="circle"
+              onClick={() => {}}
+              icon={<EditOutlined />}
+            />
+          </Tooltip>
+          <Tooltip title="Delete Labour Group">
+            <Button
+              type="danger"
+              size="medium"
+              shape="circle"
+              onClick={() => {}}
+              icon={<DeleteFilled />}
+            />
+          </Tooltip>
+        </Space>
+      )
     ),
   },
 ];
