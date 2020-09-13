@@ -1,7 +1,19 @@
 import { DeleteFilled, EditOutlined } from '@ant-design/icons';
-import { Button, Space, Tooltip } from 'antd';
+import { Button, Space, Tag, Tooltip } from 'antd';
 import React from 'react';
 import { currencyFormatter, dateFormatter } from '../../../../utils/LocaleUtils';
+
+const getNameWithTag = (name, record) => (
+  <>
+    {name}
+    <br />
+    {
+        record.leader === 'Y'
+          ? <Tag color="#87d068">Leader</Tag>
+          : <Tag color="#108ee9">Member</Tag>
+      }
+  </>
+);
 
 export default () => [
   {
@@ -12,6 +24,7 @@ export default () => [
   {
     title: 'Name',
     dataIndex: 'name',
+    render: getNameWithTag,
   },
   {
     title: 'Contact',
