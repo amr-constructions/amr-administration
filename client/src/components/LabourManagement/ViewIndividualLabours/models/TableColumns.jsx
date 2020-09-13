@@ -30,7 +30,7 @@ export default () => [
     className: 'column-money',
     dataIndex: 'wage_per_day',
     align: 'right',
-    render: (amount) => <span>{currencyFormatter(amount)}</span>,
+    render: (amount) => <span>{amount != null ? currencyFormatter(amount) : '- NA -'}</span>,
   },
   {
     title: 'Opening Balance',

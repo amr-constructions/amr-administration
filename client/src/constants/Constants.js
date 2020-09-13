@@ -23,6 +23,7 @@ export default {
     GET_WORK: 'GET_WORK',
     UPDATE_WORK: 'UPDATE_WORK',
     DELETE_WORK: 'DELETE_WORK',
+    GET_WORK_TYPES: 'GET_WORK_TYPES',
   },
 
   LABOURS_MGMT: {
@@ -32,6 +33,7 @@ export default {
       INDIVIDUAL_LABOUR: 1,
       GROUP_LABOUR: 2,
     },
+    CREATE_INDIVIDUAL_LABOUR: 'CREATE_INDIVIDUAL_LABOUR',
   },
 
   WORK_STATUS: {
@@ -57,6 +59,7 @@ export default {
       500: 'Invalid Response',
       501: 'Invalid Input Data',
       502: 'Work Not Found',
+      503: 'Work Types Not Found',
     },
     LABOURS_MGMT: {
       500: 'Invalid Response',
