@@ -1,5 +1,6 @@
 import AccountLedger from '../AccountsManagement/AccountLedger/AccountLedger';
 import AccountsHead from '../AccountsManagement/AccountsHead/AccountsHead';
+import ViewAllLabours from '../LabourManagement/ViewAllLabours/ViewAllLabours';
 import UnderConstruction from '../UnderConstruction/UnderConstruction';
 import AddNewWork from '../WorkContracts/AddNewWork/AddNewWork';
 import EditWork from '../WorkContracts/EditWork/EditWork';
@@ -92,7 +93,7 @@ export default [
   },
   {
     key: 'labour_management/labours',
-    component: UnderConstruction,
+    component: ViewAllLabours,
   },
   {
     key: 'labour_management/wage_slips_&_paymets',

@@ -32,3 +32,9 @@
   float: left;
   clear: both;
 }
+
+.ant-menu-submenu-title svg.MuiSvgIcon-root, .ant-menu-item svg.MuiSvgIcon-root{
+  position: relative;
+  top: 0.5rem;
+  right: 0.25rem;
+}

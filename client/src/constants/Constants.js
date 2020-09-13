@@ -25,6 +25,11 @@ export default {
     DELETE_WORK: 'DELETE_WORK',
   },
 
+  LABOURS_MGMT: {
+    MODULE: 'LABOURS_MGMT',
+    GET_LABOURS: 'GET_LABOURS',
+  },
+
   WORK_STATUS: {
     WIP: 0,
     COMPLETED: 1,
@@ -48,6 +53,9 @@ export default {
       500: 'Invalid Response',
       501: 'Invalid Input Data',
       502: 'Work Not Found',
+    },
+    LABOURS_MGMT: {
+      500: 'Invalid Response',
     },
   },
 };
