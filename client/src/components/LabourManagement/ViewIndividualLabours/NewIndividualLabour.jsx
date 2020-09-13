@@ -6,6 +6,7 @@ import config from '../../../config/config';
 import { formatValue, imitateContactNumberInput, imitateNumberInput } from '../../../utils/InputUtils';
 
 const { Text } = Typography;
+const { Option } = Select;
 
 const NewIndividualLabour = ({ onSubmit, state, setState }) => {
   const [ formState, setFormState ] = useState({
@@ -120,7 +121,11 @@ const NewIndividualLabour = ({ onSubmit, state, setState }) => {
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             disabled={state.modalSubmit}
-          />
+          >
+            {
+              state.workTypes.map((item) => (<Option key={item.id}>{item.type}</Option>))
+            }
+          </Select>
         </Form.Item>
 
         <Row gutter={10}>
@@ -231,6 +236,12 @@ NewIndividualLabour.propTypes = {
     visible: PropTypes.bool,
     modalSubmit: PropTypes.bool,
     newAccountHeadLoading: PropTypes.bool,
+    workTypes: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        type: PropTypes.string,
+      }),
+    ),
   }).isRequired,
   setState: PropTypes.func.isRequired,
 };
