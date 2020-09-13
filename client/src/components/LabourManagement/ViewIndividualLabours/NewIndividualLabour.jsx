@@ -1,7 +1,7 @@
 import { CheckOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Radio, Row, Select, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import config from '../../../config/config';
 import { formatValue, imitateContactNumberInput, imitateNumberInput } from '../../../utils/InputUtils';
 
@@ -9,14 +9,11 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const NewIndividualLabour = ({ onSubmit, state, setState }, formRef) => {
-  const [ formState, setFormState ] = useState({
-    dailyWageVisible: false,
-  });
-
   const toggleDailyWageInputVisibility = (e) => {
-    setFormState({
+    setState((prevState) => ({
+      ...prevState,
       dailyWageVisible: e.target.value === 'Y',
-    });
+    }));
   };
 
   return (
@@ -158,7 +155,7 @@ const NewIndividualLabour = ({ onSubmit, state, setState }, formRef) => {
           </Col>
           <Col span={12}>
             {
-            formState.dailyWageVisible
+            state.dailyWageVisible
               ? (
                 <Form.Item
                   name="wage_per_day"
@@ -240,6 +237,7 @@ NewIndividualLabour.propTypes = {
         type: PropTypes.string,
       }),
     ),
+    dailyWageVisible: PropTypes.bool,
   }).isRequired,
   setState: PropTypes.func.isRequired,
 };

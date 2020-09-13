@@ -17,6 +17,7 @@ const ViewIndividualLabours = () => {
     modalSubmit: false,
     disableNewIndividualLabour: false,
     workTypes: [],
+    dailyWageVisible: false,
   });
 
   const formRef = useRef(null);
@@ -97,6 +98,7 @@ const ViewIndividualLabours = () => {
       ...prevState,
       tableLoading: true,
       modalSubmit: false,
+      dailyWageVisible: false,
     }));
 
     formRef.current.resetFields();
