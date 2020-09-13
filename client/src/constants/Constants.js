@@ -33,6 +33,7 @@ export default {
       INDIVIDUAL_LABOUR: 1,
       GROUP_LABOUR: 2,
     },
+    CREATE_INDIVIDUAL_LABOUR: 'CREATE_INDIVIDUAL_LABOUR',
   },
 
   WORK_STATUS: {
