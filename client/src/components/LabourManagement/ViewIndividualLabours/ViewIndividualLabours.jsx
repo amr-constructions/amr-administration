@@ -49,6 +49,7 @@ const ViewIndividualLabours = () => {
       columns={Columns()}
       dataSource={state.data}
       bordered
+      size="small"
       title={() => (
         <TableTitle
           title="List Of Individual Labours"
