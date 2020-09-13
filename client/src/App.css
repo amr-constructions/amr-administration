@@ -38,3 +38,7 @@
   top: 0.5rem;
   right: 0.25rem;
 }
+
+.ant-btn svg.MuiSvgIcon-root{
+  margin-right: 0.5rem;
+}
