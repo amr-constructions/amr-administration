@@ -14,7 +14,7 @@ const ViewIndividualLabours = () => {
 
   useEffect(() => {
     const getIndividualLaboursList = async function () {
-      const response = await Services[Constants.LABOURS_MGMT.GET_LABOURS]();
+      const response = await Services[Constants.LABOURS_MGMT.GET_LABOURS](Constants.LABOURS_MGMT.LABOUR_TYPES.INDIVIDUAL_LABOUR);
       if (response.code !== Constants.SUCCESS) {
         setState((prevState) => ({
           ...prevState,
