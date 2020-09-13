@@ -6,11 +6,14 @@ import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
 import Columns from './models/TableColumns';
+import NewIndividualLabour from './NewIndividualLabour';
 
 const ViewIndividualLabours = () => {
   const [ state, setState ] = useState({
     data: [],
     tableLoading: true,
+    visible: false,
+    modalSubmit: false,
   });
 
   useEffect(() => {
@@ -42,37 +45,47 @@ const ViewIndividualLabours = () => {
   }, []);
 
   const addNewIndividualLabour = () => {
+    setState((prevState) => ({
+      ...prevState,
+      visible: true,
+    }));
+  };
+
+  const submitNewIndividualLabourForm = () => {
 
   };
 
   return (
-    <Table
-      columns={Columns()}
-      dataSource={state.data}
-      bordered
-      size="small"
-      title={() => (
-        <TableTitle
-          title="List Of Individual Labours"
-          button={{
-            icon: PersonAddIcon,
-            type: 'primary',
-            label: 'New Individual Labour',
-            onClick: addNewIndividualLabour,
-          }}
-        />
-      )}
-      className="individualLabours_Table"
-      pagination={{
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
-      }}
-      loading={{
-        indicator: (<LoadingOutlined />),
-        size: 'large',
-        tip: 'Loading Data...',
-        spinning: state.tableLoading,
-      }}
-    />
+    <>
+      <Table
+        columns={Columns()}
+        dataSource={state.data}
+        bordered
+        size="small"
+        title={() => (
+          <TableTitle
+            title="List Of Individual Labours"
+            button={{
+              icon: PersonAddIcon,
+              type: 'primary',
+              label: 'New Individual Labour',
+              onClick: addNewIndividualLabour,
+            }}
+          />
+        )}
+        className="individualLabours_Table"
+        pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
+        }}
+        loading={{
+          indicator: (<LoadingOutlined />),
+          size: 'large',
+          tip: 'Loading Data...',
+          spinning: state.tableLoading,
+        }}
+      />
+      <NewIndividualLabour onSubmit={submitNewIndividualLabourForm} state={state} setState={setState} />
+    </>
   );
 };
 
