@@ -1,7 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { message, Table } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
 import WorkServices from '../../WorkContracts/services/entry';
@@ -18,6 +18,8 @@ const ViewIndividualLabours = () => {
     disableNewIndividualLabour: false,
     workTypes: [],
   });
+
+  const formRef = useRef(null);
 
   useEffect(() => {
     const getIndividualLaboursList = async function () {
@@ -97,6 +99,8 @@ const ViewIndividualLabours = () => {
       modalSubmit: false,
     }));
 
+    formRef.current.resetFields();
+
     message.success('New Individual Labour Added Successfully');
 
     setState((prevState) => {
@@ -141,7 +145,7 @@ const ViewIndividualLabours = () => {
           spinning: state.tableLoading,
         }}
       />
-      <NewIndividualLabour onSubmit={submitNewIndividualLabourForm} state={state} setState={setState} />
+      <NewIndividualLabour ref={formRef} onSubmit={submitNewIndividualLabourForm} state={state} setState={setState} />
     </>
   );
 };

@@ -1,19 +1,17 @@
 import { CheckOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Radio, Row, Select, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import config from '../../../config/config';
 import { formatValue, imitateContactNumberInput, imitateNumberInput } from '../../../utils/InputUtils';
 
 const { Text } = Typography;
 const { Option } = Select;
 
-const NewIndividualLabour = ({ onSubmit, state, setState }) => {
+const NewIndividualLabour = ({ onSubmit, state, setState }, formRef) => {
   const [ formState, setFormState ] = useState({
     dailyWageVisible: false,
   });
-
-  const formRef = useRef(null);
 
   const toggleDailyWageInputVisibility = (e) => {
     setFormState({
@@ -246,4 +244,4 @@ NewIndividualLabour.propTypes = {
   setState: PropTypes.func.isRequired,
 };
 
-export default NewIndividualLabour;
+export default React.forwardRef(NewIndividualLabour);
