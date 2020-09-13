@@ -1,4 +1,5 @@
-import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import { message, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Constants from '../../../constants/Constants';
@@ -6,15 +7,15 @@ import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
 import Columns from './models/TableColumns';
 
-const ViewIndividualLabours = () => {
+const ViewGroupLabours = () => {
   const [ state, setState ] = useState({
     data: [],
-    tableLoading: true,
+    tableLoading: false,
   });
 
   useEffect(() => {
-    const getIndividualLaboursList = async function () {
-      const response = await Services[Constants.LABOURS_MGMT.GET_LABOURS](Constants.LABOURS_MGMT.LABOUR_TYPES.INDIVIDUAL_LABOUR);
+    const getLabourGroupList = async function () {
+      const response = await Services[Constants.LABOURS_MGMT.GET_LABOURS](Constants.LABOURS_MGMT.LABOUR_TYPES.GROUP_LABOUR);
       if (response.code !== Constants.SUCCESS) {
         setState((prevState) => ({
           ...prevState,
@@ -35,12 +36,12 @@ const ViewIndividualLabours = () => {
       }));
     };
 
-    getIndividualLaboursList();
+    getLabourGroupList();
 
     /* Empty array means, this hook is run only once when the component is mounted */
   }, []);
 
-  const addNewIndividualLabour = () => {
+  const addNewLabourGroup = () => {
 
   };
 
@@ -49,18 +50,19 @@ const ViewIndividualLabours = () => {
       columns={Columns()}
       dataSource={state.data}
       bordered
+      size="small"
       title={() => (
         <TableTitle
-          title="List Of Individual Labours"
+          title="List Of Labour Groups"
           button={{
-            icon: AppstoreAddOutlined,
+            icon: GroupAddIcon,
             type: 'primary',
-            label: 'New Individual Labour',
-            onClick: addNewIndividualLabour,
+            label: 'New Labour Group',
+            onClick: addNewLabourGroup,
           }}
         />
       )}
-      className="individualLabours_Table"
+      className="LabourGroups_Table"
       pagination={{
         showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} ${total > 1 ? 'items' : 'item'}`,
       }}
@@ -74,4 +76,4 @@ const ViewIndividualLabours = () => {
   );
 };
 
-export default ViewIndividualLabours;
+export default ViewGroupLabours;

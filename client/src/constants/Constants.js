@@ -28,6 +28,10 @@ export default {
   LABOURS_MGMT: {
     MODULE: 'LABOURS_MGMT',
     GET_LABOURS: 'GET_LABOURS',
+    LABOUR_TYPES: {
+      INDIVIDUAL_LABOUR: 1,
+      GROUP_LABOUR: 2,
+    },
   },
 
   WORK_STATUS: {
@@ -56,6 +60,7 @@ export default {
     },
     LABOURS_MGMT: {
       500: 'Invalid Response',
+      501: 'Invalid Request',
     },
   },
 };

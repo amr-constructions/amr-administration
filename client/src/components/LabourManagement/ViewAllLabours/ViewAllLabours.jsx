@@ -1,6 +1,8 @@
 import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 import React from 'react';
 import NavigationPath from '../../NavigationPath/NavigationPath';
+import ViewGroupLabours from '../ViewGroupLabours/ViewGroupLabours';
 import ViewIndividualLabours from '../ViewIndividualLabours/ViewIndividualLabours';
 
 const navigationPath = [
@@ -25,7 +27,16 @@ const navigationPath = [
 const ViewAllLabours = () => (
   <div>
     <NavigationPath path={navigationPath} />
-    <ViewIndividualLabours />
+    <Space
+      direction="vertical"
+      size="large"
+      style={{
+        width: '100%',
+      }}
+    >
+      <ViewIndividualLabours />
+      <ViewGroupLabours />
+    </Space>
   </div>
 );
 
