@@ -73,8 +73,42 @@ const ViewIndividualLabours = () => {
     }));
   };
 
-  const submitNewIndividualLabourForm = () => {
+  const submitNewIndividualLabourForm = async (values) => {
+    setState((prevState) => ({
+      ...prevState,
+      modalSubmit: true,
+    }));
 
+    const response = await Services[Constants.LABOURS_MGMT.CREATE_INDIVIDUAL_LABOUR](values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+        modalSubmit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      tableLoading: true,
+      modalSubmit: false,
+    }));
+
+    message.success('New Individual Labour Added Successfully');
+
+    setState((prevState) => {
+      const newData = prevState.data.slice(0);
+      newData.push(response.data);
+
+      return ({
+        ...prevState,
+        data: newData,
+        tableLoading: false,
+      });
+    });
   };
 
   return (
