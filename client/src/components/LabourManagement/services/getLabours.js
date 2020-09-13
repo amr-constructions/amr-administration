@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import Constants from '../../../constants/Constants';
 import { buildResponseObject, initResponseObject } from '../../../services/Common';
 
