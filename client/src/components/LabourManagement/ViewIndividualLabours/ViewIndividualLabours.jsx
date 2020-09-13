@@ -1,4 +1,5 @@
-import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { message, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Constants from '../../../constants/Constants';
@@ -49,11 +50,12 @@ const ViewIndividualLabours = () => {
       columns={Columns()}
       dataSource={state.data}
       bordered
+      size="small"
       title={() => (
         <TableTitle
           title="List Of Individual Labours"
           button={{
-            icon: AppstoreAddOutlined,
+            icon: PersonAddIcon,
             type: 'primary',
             label: 'New Individual Labour',
             onClick: addNewIndividualLabour,
