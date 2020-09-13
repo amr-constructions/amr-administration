@@ -1,8 +1,10 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import { Table } from 'antd';
+import { message, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
+import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
+import Services from '../services/entry';
 import Columns from './models/TableColumns';
 
 const ViewGroupLabours = () => {
@@ -13,6 +15,25 @@ const ViewGroupLabours = () => {
 
   useEffect(() => {
     const getLabourGroupList = async function () {
+      const response = await Services[Constants.LABOURS_MGMT.GET_LABOURS](Constants.LABOURS_MGMT.LABOUR_TYPES.GROUP_LABOUR);
+      if (response.code !== Constants.SUCCESS) {
+        setState((prevState) => ({
+          ...prevState,
+          data: [],
+          tableLoading: false,
+        }));
+
+        message.error(`${response.reason} [${response.debugCode}]`);
+        return;
+      }
+
+      const { data } = response;
+
+      setState((prevState) => ({
+        ...prevState,
+        data,
+        tableLoading: false,
+      }));
     };
 
     getLabourGroupList();
