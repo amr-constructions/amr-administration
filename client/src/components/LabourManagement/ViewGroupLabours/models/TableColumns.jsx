@@ -16,7 +16,7 @@ const getNameWithTag = (name, record) => (
 );
 
 const getWorkType = (id, workTypes) => {
-  const workTypeItem = workTypes.find((workType) => workType.id === id);
+  const workTypeItem = workTypes.find((workType) => workType.id.toString() === id.toString());
   if (workTypeItem != null) {
     return workTypeItem.type;
   }

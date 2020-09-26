@@ -4,7 +4,7 @@ import React from 'react';
 import { currencyFormatter, dateFormatter } from '../../../../utils/LocaleUtils';
 
 const getWorkType = (id, workTypes) => {
-  const workTypeItem = workTypes.find((workType) => workType.id === id);
+  const workTypeItem = workTypes.find((workType) => workType.id.toString() === id.toString());
   if (workTypeItem != null) {
     return workTypeItem.type;
   }
