@@ -8,7 +8,7 @@ import { formatValue, imitateContactNumberInput, imitateNumberInput } from '../.
 const { Text } = Typography;
 const { Option } = Select;
 
-const NewIndividualLabour = ({ onSubmit, state, setState }, formRef) => {
+const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) => {
   const toggleDailyWageInputVisibility = (e) => {
     setState((prevState) => ({
       ...prevState,
@@ -118,7 +118,7 @@ const NewIndividualLabour = ({ onSubmit, state, setState }, formRef) => {
             disabled={state.modalSubmit}
           >
             {
-              state.workTypes.map((item) => (<Option key={item.id}>{item.type}</Option>))
+              workTypes.map((item) => (<Option key={item.id}>{item.type}</Option>))
             }
           </Select>
         </Form.Item>
