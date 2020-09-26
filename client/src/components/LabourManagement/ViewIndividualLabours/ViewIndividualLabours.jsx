@@ -4,19 +4,18 @@ import { message, Table } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
-import WorkServices from '../../WorkContracts/services/entry';
 import Services from '../services/entry';
 import Columns from './models/TableColumns';
 import NewIndividualLabour from './NewIndividualLabour';
 
-const ViewIndividualLabours = () => {
+const ViewIndividualLabours = ({ workTypes }) => {
   const [ state, setState ] = useState({
     data: [],
     tableLoading: true,
     visible: false,
     modalSubmit: false,
     disableNewIndividualLabour: false,
-    workTypes: [],
+    workTypes,
     dailyWageVisible: false,
   });
 
@@ -45,26 +44,7 @@ const ViewIndividualLabours = () => {
       }));
     };
 
-    const getWorkTypeList = async function () {
-      const response = await WorkServices[Constants.WORKS_MGMT.GET_WORK_TYPES]();
-      if (response.code !== Constants.SUCCESS) {
-        setState((prevState) => ({
-          ...prevState,
-          disableNewIndividualLabour: true,
-        }));
-        message.error(`${response.reason} [${response.debugCode}]`);
-      }
-
-      const { data } = response;
-
-      setState((prevState) => ({
-        ...prevState,
-        workTypes: data,
-      }));
-    };
-
     getIndividualLaboursList();
-    getWorkTypeList();
 
     /* Empty array means, this hook is run only once when the component is mounted */
   }, []);
@@ -120,7 +100,9 @@ const ViewIndividualLabours = () => {
   return (
     <>
       <Table
-        columns={Columns()}
+        columns={Columns({
+          workTypes,
+        })}
         dataSource={state.data}
         bordered
         size="small"

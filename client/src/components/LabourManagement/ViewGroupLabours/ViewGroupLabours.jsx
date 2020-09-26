@@ -7,7 +7,7 @@ import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
 import Columns from './models/TableColumns';
 
-const ViewGroupLabours = () => {
+const ViewGroupLabours = ({ workTypes }) => {
   const [ state, setState ] = useState({
     data: [],
     tableLoading: false,
@@ -47,7 +47,9 @@ const ViewGroupLabours = () => {
 
   return (
     <Table
-      columns={Columns()}
+      columns={Columns({
+        workTypes,
+      })}
       dataSource={state.data}
       bordered
       size="small"
