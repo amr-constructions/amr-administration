@@ -35,6 +35,7 @@ export default {
     },
     CREATE_INDIVIDUAL_LABOUR: 'CREATE_INDIVIDUAL_LABOUR',
     UPDATE_LABOUR: 'UPDATE_LABOUR',
+    DELETE_WORK: 'DELETE_WORK',
   },
 
   WORK_STATUS: {
@@ -65,6 +66,7 @@ export default {
     LABOURS_MGMT: {
       500: 'Invalid Response',
       501: 'Invalid Request',
+      502: 'Labour Not Found',
     },
   },
 };
