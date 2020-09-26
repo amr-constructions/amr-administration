@@ -166,6 +166,7 @@ const ViewIndividualLabours = ({ workTypes }) => {
         columns={Columns({
           handlers: {
             editIndividualLabour,
+            deleteWork,
           },
           workTypes,
         })}
