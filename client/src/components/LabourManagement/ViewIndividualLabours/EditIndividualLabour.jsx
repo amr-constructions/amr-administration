@@ -24,7 +24,7 @@ const EditIndividualLabour = ({ onSubmit, state, setState, workTypes }) => {
       ...prevState,
       dailyWageVisible: dataForEdit.fixed === 'Y',
     }));
-  }, [ dataForEdit ]);
+  }, [ setState, dataForEdit ]);
 
   return (
     <Modal
