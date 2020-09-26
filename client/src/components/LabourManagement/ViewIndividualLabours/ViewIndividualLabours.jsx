@@ -1,6 +1,6 @@
-import { LoadingOutlined } from '@ant-design/icons';
+import { CloseOutlined, DeleteOutlined, LoadingOutlined } from '@ant-design/icons';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { message, Table } from 'antd';
+import { message, Modal, Table } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import Constants from '../../../constants/Constants';
@@ -9,6 +9,8 @@ import Services from '../services/entry';
 import EditIndividualLabour from './EditIndividualLabour';
 import Columns from './models/TableColumns';
 import NewIndividualLabour from './NewIndividualLabour';
+
+const { confirm } = Modal;
 
 const ViewIndividualLabours = ({ workTypes }) => {
   const [ state, setState ] = useState({
@@ -160,12 +162,65 @@ const ViewIndividualLabours = ({ workTypes }) => {
     });
   };
 
+  const postDeleteWork = (response) => {
+    setState((prevState) => ({
+      ...prevState,
+      tableLoading: true,
+    }));
+
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+      }));
+      message.error(`${response.reason} [${response.debugCode}]`);
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      data: prevState.data.filter((item) => (item.id !== response.data.id)),
+      tableLoading: false,
+    }));
+
+    message.success('Labour Deleted Successfully !');
+  };
+
+  const deleteWork = (id) => {
+    confirm({
+      title: 'Do you want to delete this labour ?',
+      icon: <DeleteOutlined />,
+      content: 'This action cannot be reversed',
+      okText: 'Yes, Delete',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        return new Promise((resolve) => {
+          Services[Constants.LABOURS_MGMT.DELETE_WORK](id)
+            .then((response) => {
+              resolve(postDeleteWork(response));
+            });
+        });
+      },
+      onCancel() {},
+      cancelButtonProps: {
+        icon: <CloseOutlined />,
+      },
+      okButtonProps: {
+        icon: <DeleteOutlined />,
+      },
+      autoFocusButton: 'cancel',
+      centered: true,
+    });
+  };
+
   return (
     <>
       <Table
         columns={Columns({
           handlers: {
             editIndividualLabour,
+            deleteWork,
           },
           workTypes,
         })}
