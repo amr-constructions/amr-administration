@@ -1,10 +1,12 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { message, Table } from 'antd';
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
+import EditIndividualLabour from './EditIndividualLabour';
 import Columns from './models/TableColumns';
 import NewIndividualLabour from './NewIndividualLabour';
 
@@ -15,7 +17,6 @@ const ViewIndividualLabours = ({ workTypes }) => {
     visible: false,
     modalSubmit: false,
     disableNewIndividualLabour: false,
-    workTypes,
     dailyWageVisible: false,
     editLabourModalVisible: false,
     dataForEdit: {
@@ -108,6 +109,9 @@ const ViewIndividualLabours = ({ workTypes }) => {
     }));
   };
 
+  const updateIndividualLabour = async () => {
+  };
+
   return (
     <>
       <Table
@@ -143,9 +147,19 @@ const ViewIndividualLabours = ({ workTypes }) => {
           spinning: state.tableLoading,
         }}
       />
-      <NewIndividualLabour ref={formRef} onSubmit={submitNewIndividualLabourForm} state={state} setState={setState} />
+      <NewIndividualLabour ref={formRef} onSubmit={submitNewIndividualLabourForm} state={state} setState={setState} workTypes={workTypes} />
+      <EditIndividualLabour onSubmit={updateIndividualLabour} state={state} setState={setState} workTypes={workTypes} />
     </>
   );
+};
+
+ViewIndividualLabours.propTypes = {
+  workTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default ViewIndividualLabours;
