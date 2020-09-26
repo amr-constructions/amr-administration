@@ -1,10 +1,12 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { message, Table } from 'antd';
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
+import EditIndividualLabour from './EditIndividualLabour';
 import Columns from './models/TableColumns';
 import NewIndividualLabour from './NewIndividualLabour';
 
@@ -15,8 +17,10 @@ const ViewIndividualLabours = ({ workTypes }) => {
     visible: false,
     modalSubmit: false,
     disableNewIndividualLabour: false,
-    workTypes,
     dailyWageVisible: false,
+    editLabourModalVisible: false,
+    dataForEdit: {
+    },
   });
 
   const formRef = useRef(null);
@@ -97,10 +101,72 @@ const ViewIndividualLabours = ({ workTypes }) => {
     });
   };
 
+  const editIndividualLabour = (e, record) => {
+    setState((prevState) => ({
+      ...prevState,
+      dataForEdit: record,
+      editLabourModalVisible: true,
+    }));
+  };
+
+  const updateIndividualLabour = async (values) => {
+    setState((prevState) => ({
+      ...prevState,
+      modalSubmit: true,
+    }));
+
+    const response = await Services[Constants.LABOURS_MGMT.UPDATE_LABOUR](values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+        modalSubmit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      tableLoading: true,
+    }));
+
+    const idx = state.data.findIndex((item) => item.id === response.data.id);
+    if (idx === -1) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+        modalSubmit: false,
+      }));
+
+      message.error('Labour Update Failed [CLIENT]');
+      return;
+    }
+
+    const updatedData = state.data.slice(0);
+    updatedData[idx] = {
+      ...updatedData[idx], ...response.data,
+    };
+
+    setState((prevState) => {
+      message.success('Labour Updated Successfully');
+      return ({
+        ...prevState,
+        data: updatedData,
+        tableLoading: false,
+        editLabourModalVisible: false,
+        modalSubmit: false,
+      });
+    });
+  };
+
   return (
     <>
       <Table
         columns={Columns({
+          handlers: {
+            editIndividualLabour,
+          },
           workTypes,
         })}
         dataSource={state.data}
@@ -129,9 +195,19 @@ const ViewIndividualLabours = ({ workTypes }) => {
           spinning: state.tableLoading,
         }}
       />
-      <NewIndividualLabour ref={formRef} onSubmit={submitNewIndividualLabourForm} state={state} setState={setState} />
+      <NewIndividualLabour ref={formRef} onSubmit={submitNewIndividualLabourForm} state={state} setState={setState} workTypes={workTypes} />
+      <EditIndividualLabour onSubmit={updateIndividualLabour} state={state} setState={setState} workTypes={workTypes} />
     </>
   );
+};
+
+ViewIndividualLabours.propTypes = {
+  workTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default ViewIndividualLabours;

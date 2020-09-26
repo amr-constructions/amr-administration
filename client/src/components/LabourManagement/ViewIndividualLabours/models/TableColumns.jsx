@@ -4,14 +4,14 @@ import React from 'react';
 import { currencyFormatter, dateFormatter } from '../../../../utils/LocaleUtils';
 
 const getWorkType = (id, workTypes) => {
-  const workTypeItem = workTypes.find((workType) => workType.id === id);
+  const workTypeItem = workTypes.find((workType) => workType.id.toString() === id.toString());
   if (workTypeItem != null) {
     return workTypeItem.type;
   }
   return null;
 };
 
-export default ({ workTypes }) => [
+export default ({ workTypes, handlers }) => [
   {
     title: '#',
     dataIndex: 'id',
@@ -62,14 +62,14 @@ export default ({ workTypes }) => [
     dataIndex: 'actions',
     fixed: 'right',
     align: 'center',
-    render: () => (
+    render: (text, record) => (
       <Space size="large" align="end">
         <Tooltip title="Edit Labour Details">
           <Button
             type="primary"
             size="medium"
             shape="circle"
-            onClick={() => {}}
+            onClick={(e) => handlers.editIndividualLabour(e, record)}
             icon={<EditOutlined />}
           />
         </Tooltip>

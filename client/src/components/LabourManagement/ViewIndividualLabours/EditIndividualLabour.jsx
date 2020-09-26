@@ -1,14 +1,15 @@
-import { CheckOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Modal, Radio, Row, Select, Typography } from 'antd';
+import { EditOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Input, Modal, Radio, Row, Select } from 'antd';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import config from '../../../config/config';
 import { formatValue, imitateContactNumberInput, imitateNumberInput } from '../../../utils/InputUtils';
 
-const { Text } = Typography;
 const { Option } = Select;
 
-const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) => {
+const EditIndividualLabour = ({ onSubmit, state, setState, workTypes }) => {
+  const formRef = useRef(null);
+
   const toggleDailyWageInputVisibility = (e) => {
     setState((prevState) => ({
       ...prevState,
@@ -16,38 +17,54 @@ const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) 
     }));
   };
 
+  const { editLabourModalVisible, modalSubmit, dataForEdit } = state;
+
+  useEffect(() => {
+    setState((prevState) => ({
+      ...prevState,
+      dailyWageVisible: dataForEdit.fixed === 'Y',
+    }));
+  }, [ setState, dataForEdit ]);
+
   return (
     <Modal
-      title="Create Individual Labour"
-      visible={state.visible}
+      title="Edit Individual Labour"
+      visible={editLabourModalVisible}
       onCancel={() => {
         setState((prevState) => ({
           ...prevState,
-          visible: false,
+          editLabourModalVisible: false,
         }));
       }}
       footer={[
         <Button
           key={0}
           type="primary"
-          loading={state.modalSubmit}
+          loading={modalSubmit}
           onClick={() => {
             formRef.current.submit();
           }}
-          disabled={state.modalSubmit}
+          disabled={modalSubmit}
         >
-          Create
-          <CheckOutlined />
+          Update
+          <EditOutlined />
         </Button>,
       ]}
       destroyOnClose
     >
       <Form
-        name="new-individual-labour-form"
+        name="edit-individual-labour-form"
         ref={formRef}
         onFinish={onSubmit}
         hideRequiredMark
         layout="vertical"
+        initialValues={{
+          name: dataForEdit.name,
+          contact: dataForEdit.contact?.substr(config.LOCALE.countryCode.length),
+          fixed: dataForEdit.fixed,
+          wage_per_day: parseFloat(dataForEdit.wage_per_day).toFixed(2),
+          work_type: dataForEdit.work_type?.toString(),
+        }}
       >
 
         <Form.Item
@@ -150,6 +167,7 @@ const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) 
                 }}
                 optionType="button"
                 buttonStyle="solid"
+                disabled={state.modalSubmit}
               />
             </Form.Item>
           </Col>
@@ -160,7 +178,6 @@ const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) 
                 <Form.Item
                   name="wage_per_day"
                   label="Wage Per Day"
-                  initialValue="0.00"
                   rules={[
                     {
                       required: true,
@@ -188,58 +205,44 @@ const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) 
         </Row>
 
         <Form.Item
-          name="opening_balance"
-          label="Opening/Old Balance At The Time Of Profile Creation"
-          initialValue="0.00"
-          rules={[
-            {
-              required: true,
-              message: 'Opening Balance Cannot Be Empty!',
-            },
-          ]}
+          name="id"
+          initialValue={dataForEdit.id}
+          hidden
         >
-          <Input
-            prefix={config.LOCALE.currencySymbol}
-            disabled={state.modalSubmit}
-            size="large"
-            style={{
-              width: '100%',
-            }}
-            onPressEnter={() => formRef.current.submit()}
-            onChange={(e) => imitateNumberInput(e, formRef, 'opening_balance')}
-            onBlur={(e) => formatValue(e, formRef, 'opening_balance')}
-          />
+          <Input type="text" />
         </Form.Item>
-        <Text
-          type="secondary"
-          strong
-          style={{
-            display: 'block', marginTop: '-1.5rem',
-          }}
-        >
-          {`Add "${'-'}" sign for Balance To Receive`}
-        </Text>
 
       </Form>
     </Modal>
   );
 };
 
-NewIndividualLabour.propTypes = {
+EditIndividualLabour.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   state: PropTypes.shape({
-    visible: PropTypes.bool,
+    editLabourModalVisible: PropTypes.bool,
     modalSubmit: PropTypes.bool,
     newAccountHeadLoading: PropTypes.bool,
-    workTypes: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        type: PropTypes.string,
-      }),
-    ),
-    dailyWageVisible: PropTypes.bool,
+    dataForEdit: PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+      fixed: PropTypes.oneOf([ 'Y', 'N' ]),
+      contact: PropTypes.string,
+      wage_per_day: PropTypes.string,
+      work_type: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+    }),
+    dailyWageVisible: PropTypes.bool.isRequired,
   }).isRequired,
   setState: PropTypes.func.isRequired,
+  workTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
-export default React.forwardRef(NewIndividualLabour);
+export default EditIndividualLabour;
