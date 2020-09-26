@@ -17,6 +17,9 @@ const ViewIndividualLabours = ({ workTypes }) => {
     disableNewIndividualLabour: false,
     workTypes,
     dailyWageVisible: false,
+    editLabourModalVisible: false,
+    dataForEdit: {
+    },
   });
 
   const formRef = useRef(null);
@@ -98,6 +101,11 @@ const ViewIndividualLabours = ({ workTypes }) => {
   };
 
   const editIndividualLabour = (e, record) => {
+    setState((prevState) => ({
+      ...prevState,
+      dataForEdit: record,
+      editLabourModalVisible: true,
+    }));
   };
 
   return (
