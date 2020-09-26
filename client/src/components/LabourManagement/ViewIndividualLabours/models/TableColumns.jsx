@@ -11,7 +11,7 @@ const getWorkType = (id, workTypes) => {
   return null;
 };
 
-export default ({ workTypes }) => [
+export default ({ workTypes, handlers }) => [
   {
     title: '#',
     dataIndex: 'id',
@@ -62,14 +62,14 @@ export default ({ workTypes }) => [
     dataIndex: 'actions',
     fixed: 'right',
     align: 'center',
-    render: () => (
+    render: (text, record) => (
       <Space size="large" align="end">
         <Tooltip title="Edit Labour Details">
           <Button
             type="primary"
             size="medium"
             shape="circle"
-            onClick={() => {}}
+            onClick={(e) => handlers.editIndividualLabour(e, record)}
             icon={<EditOutlined />}
           />
         </Tooltip>

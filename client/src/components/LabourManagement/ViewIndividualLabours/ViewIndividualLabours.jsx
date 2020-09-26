@@ -97,10 +97,16 @@ const ViewIndividualLabours = ({ workTypes }) => {
     });
   };
 
+  const editIndividualLabour = (e, record) => {
+  };
+
   return (
     <>
       <Table
         columns={Columns({
+          handlers: {
+            editIndividualLabour,
+          },
           workTypes,
         })}
         dataSource={state.data}
