@@ -109,7 +109,55 @@ const ViewIndividualLabours = ({ workTypes }) => {
     }));
   };
 
-  const updateIndividualLabour = async () => {
+  const updateIndividualLabour = async (values) => {
+    setState((prevState) => ({
+      ...prevState,
+      modalSubmit: true,
+    }));
+
+    const response = await Services[Constants.LABOURS_MGMT.UPDATE_LABOUR](values);
+    if (response.code !== Constants.SUCCESS) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+        modalSubmit: false,
+      }));
+
+      message.error(`${response.reason} [${response.debugCode}]`);
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      tableLoading: true,
+    }));
+
+    const idx = state.data.findIndex((item) => item.id === response.data.id);
+    if (idx === -1) {
+      setState((prevState) => ({
+        ...prevState,
+        tableLoading: false,
+        modalSubmit: false,
+      }));
+
+      message.error('Labour Update Failed [CLIENT]');
+      return;
+    }
+
+    const updatedData = state.data.slice(0);
+    updatedData[idx] = {
+      ...updatedData[idx], ...response.data,
+    };
+
+    setState((prevState) => {
+      message.success('Labour Updated Successfully');
+      return ({
+        ...prevState,
+        data: updatedData,
+        tableLoading: false,
+        editLabourModalVisible: false,
+        modalSubmit: false,
+      });
+    });
   };
 
   return (
