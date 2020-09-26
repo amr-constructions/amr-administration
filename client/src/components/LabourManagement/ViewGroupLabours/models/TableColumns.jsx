@@ -15,7 +15,15 @@ const getNameWithTag = (name, record) => (
   </>
 );
 
-export default () => [
+const getWorkType = (id, workTypes) => {
+  const workTypeItem = workTypes.find((workType) => workType.id === id);
+  if (workTypeItem != null) {
+    return workTypeItem.type;
+  }
+  return null;
+};
+
+export default ({ workTypes }) => [
   {
     title: '#',
     dataIndex: 'id',
@@ -33,6 +41,7 @@ export default () => [
   {
     title: 'Work Type',
     dataIndex: 'work_type',
+    render: (id) => getWorkType(id, workTypes),
   },
   {
     title: 'Fixed Wage ?',
