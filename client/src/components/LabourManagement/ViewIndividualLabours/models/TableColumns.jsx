@@ -78,7 +78,7 @@ export default ({ workTypes, handlers }) => [
             type="danger"
             size="medium"
             shape="circle"
-            onClick={(e) => handlers.deleteWork(record.id)}
+            onClick={() => handlers.deleteWork(record.id)}
             icon={<DeleteFilled />}
           />
         </Tooltip>

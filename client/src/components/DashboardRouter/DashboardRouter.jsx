@@ -9,7 +9,7 @@ const DashboardRouter = () => (
     <Switch>
       <Route exact strict path="/dashboard" component={UnderConstruction} />
       {
-        DashboardComponentRoutes.map((item, index) => (<Route exact strict path={`/dashboard/${item.key}`} component={item.component} key={index} />))
+        DashboardComponentRoutes.map((item) => (<Route exact strict path={`/dashboard/${item.key}`} component={item.component} key={item.key} />))
       }
       <Route path="*" component={NotFound} />
     </Switch>

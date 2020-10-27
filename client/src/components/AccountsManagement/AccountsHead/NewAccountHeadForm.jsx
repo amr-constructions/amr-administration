@@ -8,7 +8,7 @@ import './AccountsHead.css';
 
 const { Option } = Select;
 
-const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => (
+const NewAccountHeadForm = React.forwardRef(({ onSubmit, state, setState }, formRef) => (
   <Modal
     title="Create Account Head"
     visible={state.visible}
@@ -111,7 +111,7 @@ const NewAccountHeadForm = ({ onSubmit, state, setState }, formRef) => (
 
     </Form>
   </Modal>
-);
+));
 
 NewAccountHeadForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
@@ -123,4 +123,4 @@ NewAccountHeadForm.propTypes = {
   setState: PropTypes.func.isRequired,
 };
 
-export default React.forwardRef(NewAccountHeadForm);
+export default NewAccountHeadForm;
