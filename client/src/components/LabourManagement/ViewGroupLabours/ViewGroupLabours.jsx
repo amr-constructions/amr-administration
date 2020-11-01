@@ -2,6 +2,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import { message, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Constants from '../../../constants/Constants';
 import TableTitle from '../../TableTitle/TableTitle';
 import Services from '../services/entry';
@@ -76,6 +77,19 @@ const ViewGroupLabours = ({ workTypes }) => {
       }}
     />
   );
+};
+
+ViewGroupLabours.propTypes = {
+  workTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      type: PropTypes.string,
+    }),
+  ),
+};
+
+ViewGroupLabours.defaultProps = {
+  workTypes: null,
 };
 
 export default ViewGroupLabours;

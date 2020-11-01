@@ -8,7 +8,7 @@ import { formatValue, imitateContactNumberInput, imitateNumberInput } from '../.
 const { Text } = Typography;
 const { Option } = Select;
 
-const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) => {
+const NewIndividualLabour = React.forwardRef(({ onSubmit, state, setState, workTypes }, formRef) => {
   const toggleDailyWageInputVisibility = (e) => {
     setState((prevState) => ({
       ...prevState,
@@ -223,7 +223,7 @@ const NewIndividualLabour = ({ onSubmit, state, setState, workTypes }, formRef) 
       </Form>
     </Modal>
   );
-};
+});
 
 NewIndividualLabour.propTypes = {
   onSubmit: PropTypes.func.isRequired,
@@ -231,15 +231,19 @@ NewIndividualLabour.propTypes = {
     visible: PropTypes.bool,
     modalSubmit: PropTypes.bool,
     newAccountHeadLoading: PropTypes.bool,
-    workTypes: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        type: PropTypes.string,
-      }),
-    ),
     dailyWageVisible: PropTypes.bool,
   }).isRequired,
   setState: PropTypes.func.isRequired,
+  workTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      type: PropTypes.string,
+    }),
+  ),
 };
 
-export default React.forwardRef(NewIndividualLabour);
+NewIndividualLabour.defaultProps = {
+  workTypes: null,
+};
+
+export default NewIndividualLabour;
